@@ -286,6 +286,10 @@ const DS=`غذا|خواړه|Food
 نام و مبلغ هدف را وارد کنید|د موخې نوم او مبلغ ولیکئ|Enter the goal name and amount
 تسویه شد|تصفیه شو|Settled
 نسخه پشتیبان ذخیره شد|بیک‌اپ خوندي شو|Backup saved
+بازگردانی از فایل پشتیبان|د بیک‌اپ له فایل نه بیرته راوړل|Restore from backup file
+اطلاعات بازگردانی شد|معلومات بیرته راوړل شول|Data restored
+فایل پشتیبان معتبر نیست|د بیک‌اپ فایل معتبر نه دی|Invalid backup file
+با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟|د بیرته راوړلو سره اوسني معلومات بدلېږي. ادامه ورکوئ؟|Restoring will replace your current data. Continue?
 گزارش PDF آماده شد|PDF راپور چمتو شو|PDF report ready
 در نسخه اصلی: ثبت قرض جدید|په اصلي نسخه کې: نوی پور ثبتول|In the full version: add a new debt
 بودجه تعیین شد|بودیجه وټاکل شوه|Budget set
@@ -392,7 +396,9 @@ settings(){
  const T=(k,t,s)=>`<div class="row"><div class="m"><b>${t}</b><span>${s}</span></div><button class="tg ${S[k]?'on':''}" role="switch" aria-checked="${!!S[k]}" aria-label="${t}" onclick="tgl('${k}')"></button></div>`;
  return `<div class="card">${T('dark','حالت شب','برای استفاده شبانه')}${T('pin','قفل با رمز','حفظ حریم خصوصی')}${T('rem','یادآوری قبض‌ها','یک روز قبل از موعد')}</div>
  <div class="card"><div class="row"><div class="m"><b>واحد پول</b></div><span class="pill on">افغانی (AFN)</span></div><div class="row"><div class="m"><b>زبان</b></div><div style="display:flex;gap:6px">${[['fa','دری'],['ps','پښتو'],['en','English']].map(l=>`<button class="pill ${S.lang===l[0]?'on':''}" onclick="sl('${l[0]}')">${l[1]}</button>`).join('')}</div></div></div>
- <button class="btn" onclick="bk()">پشتیبان‌گیری از اطلاعات</button>`}
+ <button class="btn" onclick="bk()">پشتیبان‌گیری از اطلاعات</button>
+ <button class="btn g" style="margin-top:10px" onclick="$('rf').click()">بازگردانی از فایل پشتیبان</button>
+ <input type="file" id="rf" accept="application/json,.json" hidden onchange="rs(this)">`}
 };
 const T={home:['بودجه‌یار','عقرب ۱۴۰۵'],tx:['همه ثبت‌ها'],add:['ثبت جدید'],budget:['بودجه ماهانه'],goals:['هدف‌های پس‌انداز'],more:['بیشتر'],debts:['قرض‌ها'],report:['گزارش ماه'],settings:['تنظیمات'],newcat:['بخش جدید']};
 const MAIN=['home','budget','goals','more'];
@@ -446,6 +452,8 @@ const ymNow=()=>{const o=sol(new Date());return o.y*12+o.m-1};
 const cm=x=>x.ym===undefined||x.ym===ymNow();
 function persist(){try{localStorage.setItem('bY1',JSON.stringify({CATS,INC,lim,tx,bills,goals,debts,id,lang:S.lang,dark:S.dark,pin:S.pin,rem:S.rem}))}catch(e){}}
 function bk(){persist();const b=new Blob([localStorage.getItem('bY1')||'{}'],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
+function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
+function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;try{localStorage.setItem('bY1',JSON.stringify(j))}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)};r.onerror=bad;r.readAsText(f)}
 (function(){try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(!j)return;CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.pin=j.pin;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}catch(e){}})();
 draw();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
