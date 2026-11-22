@@ -98,6 +98,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-o
 .lmi{width:112px;flex:none;margin:0;padding:9px 8px;text-align:center;font-weight:600;font-size:13px}
 html[dir=ltr] .flip svg{transform:scaleX(-1)}
 @media(max-width:519px){.ph{max-width:none;max-height:none}html,body{height:100dvh}}
+.lk{position:absolute;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto}.lkb{width:100%;max-width:340px;display:grid;gap:12px;text-align:center}.lkn{font-size:13px;color:var(--mute);line-height:1.8}.lkm{min-height:20px;color:var(--red);font-size:14px}.lks{background:none;border:0;color:var(--lap);font-size:14px;padding:8px}.btn:disabled{opacity:.6}
 </style>
 </head>
 <body>
@@ -289,6 +290,28 @@ const DS=`غذا|خواړه|Food
 بازگردانی از فایل پشتیبان|د بیک‌اپ له فایل نه بیرته راوړل|Restore from backup file
 اطلاعات بازگردانی شد|معلومات بیرته راوړل شول|Data restored
 فایل پشتیبان معتبر نیست|د بیک‌اپ فایل معتبر نه دی|Invalid backup file
+رمز خود را وارد کنید|خپل پټنوم دننه کړئ|Enter your PIN
+تنظیم رمز|د پټنوم ټاکل|Set a PIN
+رمز فعلی را وارد کنید|اوسنی پټنوم دننه کړئ|Enter your current PIN
+رمز|پټنوم|PIN
+رمز (حداقل ۶ رقم)|پټنوم (لږ تر لږه ۶ عدده)|PIN (at least 6 digits)
+تکرار رمز|پټنوم بیا ولیکئ|Repeat PIN
+باز کردن|خلاصول|Unlock
+فعال کردن قفل|قفل فعالول|Enable lock
+غیرفعال کردن قفل|قفل غیرفعالول|Disable lock
+لغو|لغوه|Cancel
+رمز را فراموش کرده‌ام|پټنوم مې هېر شوی|I forgot my PIN
+رمز اشتباه است|پټنوم ناسم دی|Wrong PIN
+چند لحظه صبر کنید و دوباره امتحان کنید|یو څو شېبې صبر وکړئ او بیا هڅه وکړئ|Wait a moment and try again
+رمز باید حداقل ۶ رقم باشد|پټنوم باید لږ تر لږه ۶ عدده وي|PIN must be at least 6 characters
+دو رمز یکسان نیست|دوه پټنومونه سره برابر نه دي|The two PINs do not match
+هشدار: اگر رمز را فراموش کنید، اطلاعات قابل بازیابی نیست. حتماً از اطلاعات پشتیبان بگیرید.|خبرداری: که پټنوم مو هېر شي، معلومات بیرته نه ترلاسه کېږي. مهرباني وکړئ بیک‌اپ واخلئ.|Warning: if you forget your PIN, your data cannot be recovered. Make a backup first.
+قفل فعال شد|قفل فعال شو|Lock enabled
+قفل غیرفعال شد|قفل غیرفعال شو|Lock disabled
+این مرورگر از رمزگذاری پشتیبانی نمی‌کند|دا براوزر کوډ کول نه ملاتړ کوي|This browser does not support encryption (https is required)
+اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟|کوډ شوي معلومات پرته له پټنوم نه بیرته نه ترلاسه کېږي. که بیک‌اپ فایل لرئ، وروسته له پاکولو یې بیرته راوړلای شئ. ټول معلومات پاک شي؟|Encrypted data cannot be recovered without the PIN. If you have a backup file you can restore it after erasing. Erase all data?
+مطمئن هستید؟ این کار قابل بازگشت نیست.|ډاډه یاست؟ دا کار بیرته نه کېږي.|Are you sure? This cannot be undone.
+فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.|د بیک‌اپ فایل کوډ نه کېږي؛ په خوندي ځای کې یې وساتئ.|The backup file is not encrypted; keep it somewhere safe.
 با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟|د بیرته راوړلو سره اوسني معلومات بدلېږي. ادامه ورکوئ؟|Restoring will replace your current data. Continue?
 گزارش PDF آماده شد|PDF راپور چمتو شو|PDF report ready
 در نسخه اصلی: ثبت قرض جدید|په اصلي نسخه کې: نوی پور ثبتول|In the full version: add a new debt
@@ -398,7 +421,8 @@ settings(){
  <div class="card"><div class="row"><div class="m"><b>واحد پول</b></div><span class="pill on">افغانی (AFN)</span></div><div class="row"><div class="m"><b>زبان</b></div><div style="display:flex;gap:6px">${[['fa','دری'],['ps','پښتو'],['en','English']].map(l=>`<button class="pill ${S.lang===l[0]?'on':''}" onclick="sl('${l[0]}')">${l[1]}</button>`).join('')}</div></div></div>
  <button class="btn" onclick="bk()">پشتیبان‌گیری از اطلاعات</button>
  <button class="btn g" style="margin-top:10px" onclick="$('rf').click()">بازگردانی از فایل پشتیبان</button>
- <input type="file" id="rf" accept="application/json,.json" hidden onchange="rs(this)">`}
+ <input type="file" id="rf" accept="application/json,.json" hidden onchange="rs(this)">
+ <p style="font-size:12px;color:var(--mute);text-align:center;margin-top:10px;line-height:1.8">فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.</p>`}
 };
 const T={home:['بودجه‌یار','عقرب ۱۴۰۵'],tx:['همه ثبت‌ها'],add:['ثبت جدید'],budget:['بودجه ماهانه'],goals:['هدف‌های پس‌انداز'],more:['بیشتر'],debts:['قرض‌ها'],report:['گزارش ماه'],settings:['تنظیمات'],newcat:['بخش جدید']};
 const MAIN=['home','budget','goals','more'];
@@ -447,15 +471,56 @@ function dsl(){S.ddt={d:+$('sd').value,m:+$('sm').value,y:+$('sy').value}}
 function dpk(k){if($('sd'))dsl();S.dw=$('dw').value;S.dm=$('da2').value;S.dq=$('dnt').value;S.dsel=k;if(k==='t')S.ddt=sol(new Date());else if(k==='y')S.ddt=sol(new Date(Date.now()-864e5));draw()}
 function dk(){if($('sd'))dsl();S.dw=$('dw').value;S.dm=$('da2').value;S.dq=$('dnt').value;draw()}
 function sd(){const w=$('dw').value.trim(),a=pn($('da2').value);if(!w||!a){toast('نام و مبلغ را وارد کنید');return}if($('sd'))dsl();const o={...S.ddt};o.d=Math.min(o.d,o.m<=6?31:30);debts.push({id:++id,who:w,a,dir:S.dd==='lent'?'lent':'owe',dt:o,note:$('dnt').value.trim()});S.df=false;toast('قرض ثبت شد');draw()}
-function tgl(k){if(k==='dark'){S.dark=!S.dark;document.documentElement.dataset.theme=S.dark?'dark':'light'}else S[k]=!S[k];draw()}
+function tgl(k){if(k==='pin'){if(S.pin)lk('off');else if(cOK())lk('set');else toast('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}if(k==='dark'){S.dark=!S.dark;document.documentElement.dataset.theme=S.dark?'dark':'light'}else S[k]=!S[k];draw()}
 const ymNow=()=>{const o=sol(new Date());return o.y*12+o.m-1};
 const cm=x=>x.ym===undefined||x.ym===ymNow();
-function persist(){try{localStorage.setItem('bY1',JSON.stringify({CATS,INC,lim,tx,bills,goals,debts,id,lang:S.lang,dark:S.dark,pin:S.pin,rem:S.rem}))}catch(e){}}
-function bk(){persist();const b=new Blob([localStorage.getItem('bY1')||'{}'],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
+const MINPIN=6,PBK=310000,enc=new TextEncoder(),dec=new TextDecoder();
+let LOCKED=false;try{LOCKED=!!localStorage.getItem('bY1e')}catch(e){}
+let KEY=null,SALT=null,Q=Promise.resolve();
+const u2b=u=>{let t='';for(let i=0;i<u.length;i+=8192)t+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(t)};
+const b2u=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
+const npin=p=>p.trim().replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const cOK=()=>!!(window.crypto&&crypto.subtle);
+const dkey=async(p,sl)=>{const m=await crypto.subtle.importKey('raw',enc.encode(p),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt:sl,iterations:PBK,hash:'SHA-256'},m,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])};
+const seal=async js=>{const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},KEY,enc.encode(js));return JSON.stringify({v:1,s:u2b(SALT),i:u2b(iv),d:u2b(new Uint8Array(ct))})};
+async function opn(p){const o=JSON.parse(localStorage.getItem('bY1e')),sl=b2u(o.s),k=await dkey(p,sl),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b2u(o.i)},k,b2u(o.d));return{j:JSON.parse(dec.decode(pt)),k,s:sl}}
+const snap=()=>({CATS,INC,lim,tx,bills,goals,debts,id,lang:S.lang,dark:S.dark,rem:S.rem});
+function persist(){const js=JSON.stringify(snap());try{localStorage.setItem('bY1l',S.lang);localStorage.setItem('bY1d',S.dark?'1':'')}catch(e){}if(KEY)Q=Q.then(async()=>{try{localStorage.setItem('bY1e',await seal(js))}catch(e){}});else if(!LOCKED)try{localStorage.setItem('bY1',js)}catch(e){}}
+function lkWait(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');if(!f.n||f.n<4)return 0;return Math.max(0,Math.min(300,5*2**(f.n-4))*1000-(Date.now()-f.t))}catch(e){return 0}}
+function lkFail(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');localStorage.setItem('bY1f',JSON.stringify({n:(f.n||0)+1,t:Date.now()}))}catch(e){}}
+function lkPrep(){try{const l=localStorage.getItem('bY1l');if(['fa','ps','en'].includes(l))S.lang=l;if(localStorage.getItem('bY1d')){S.dark=true;document.documentElement.dataset.theme='dark'}}catch(e){}const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl'}
+function lk(mode){let o=$('lk');if(!o){o=document.createElement('div');o.id='lk';o.className='lk';document.querySelector('.ph').appendChild(o)}
+const t=tx2,F=(i,ph)=>`<input class="fld" id="${i}" type="password" inputmode="numeric" autocomplete="off" placeholder="${t(ph)}" style="text-align:center" onkeydown="if(event.key==='Enter')lkgo('${mode}')">`;
+const ttl=mode==='set'?'تنظیم رمز':mode==='off'?'رمز فعلی را وارد کنید':'رمز خود را وارد کنید',go=mode==='set'?'فعال کردن قفل':mode==='off'?'غیرفعال کردن قفل':'باز کردن';
+o.innerHTML=`<div class="lkb"><img src="icon-192.png" width="72" height="72" alt="" style="border-radius:18px;margin:0 auto 4px"><h2>${t(ttl)}</h2>${mode==='set'?`<p class="lkn">${t('هشدار: اگر رمز را فراموش کنید، اطلاعات قابل بازیابی نیست. حتماً از اطلاعات پشتیبان بگیرید.')}</p>${F('lp1','رمز (حداقل ۶ رقم)')}${F('lp2','تکرار رمز')}`:F('lp1','رمز')}<div class="lkm" id="lkm" role="alert"></div><button class="btn" id="lkg" onclick="lkgo('${mode}')">${t(go)}</button>${mode==='set'||mode==='off'?`<button class="lks" onclick="lkx()">${t('لغو')}</button>`:`<button class="lks" onclick="lkf()">${t('رمز را فراموش کرده‌ام')}</button>`}</div>`;
+setTimeout(()=>{const e=$('lp1');if(e)e.focus()},60)}
+function lkx(){const o=$('lk');if(o)o.remove();draw()}
+function lkf(){if(confirm(tx2('اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟'))&&confirm(tx2('مطمئن هستید؟ این کار قابل بازگشت نیست.'))){try{['bY1e','bY1','bY1f'].forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()}}
+async function lkgo(mode){const m=$('lkm'),b=$('lkg'),say=x=>{m.textContent=tx2(x)},p1=npin($('lp1').value);say('');
+if(!cOK()){say('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}
+if(mode==='set'){
+if(p1.length<MINPIN){say('رمز باید حداقل ۶ رقم باشد');return}
+if(p1!==npin($('lp2').value)){say('دو رمز یکسان نیست');return}
+b.disabled=true;
+try{const sl=crypto.getRandomValues(new Uint8Array(16)),k=await dkey(p1,sl);SALT=sl;KEY=k;await Q;localStorage.setItem('bY1e',await seal(JSON.stringify(snap())));localStorage.removeItem('bY1');LOCKED=true;S.pin=true}catch(e){KEY=null;SALT=null;b.disabled=false;say('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}
+lkx();toast('قفل فعال شد');return}
+if(!p1)return;
+const chkW=mode==='unlock'||mode==='relock';
+if(chkW&&lkWait()>0){say('چند لحظه صبر کنید و دوباره امتحان کنید');return}
+b.disabled=true;let r;try{r=await opn(p1)}catch(e){}
+b.disabled=false;
+if(!r){if(chkW)lkFail();say('رمز اشتباه است');const e=$('lp1');e.value='';e.focus();return}
+try{localStorage.removeItem('bY1f')}catch(e){}
+if(mode==='unlock'){applyState(r.j);KEY=r.k;SALT=r.s;S.pin=true;lkx();return}
+if(mode==='relock'){const o=$('lk');if(o)o.remove();return}
+if(mode==='off'){await Q;try{localStorage.setItem('bY1',JSON.stringify(snap()));localStorage.removeItem('bY1e')}catch(e){say('رمز اشتباه است');return}KEY=null;SALT=null;LOCKED=false;S.pin=false;lkx();toast('قفل غیرفعال شد')}}
+let HT=0;document.addEventListener('visibilitychange',()=>{if(document.hidden){HT=Date.now();return}if(KEY&&HT&&Date.now()-HT>60000&&!$('lk'))lk('relock')});
+function applyState(j){CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}
+function bk(){const b=new Blob([JSON.stringify(snap())],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
 function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
-function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;try{localStorage.setItem('bY1',JSON.stringify(j))}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)};r.onerror=bad;r.readAsText(f)}
-(function(){try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(!j)return;CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.pin=j.pin;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}catch(e){}})();
-draw();
+function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;delete j.pin;const js=JSON.stringify(j);Q.then(async()=>{try{if(KEY)localStorage.setItem('bY1e',await seal(js));else localStorage.setItem('bY1',js)}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)})};r.onerror=bad;r.readAsText(f)}
+(function(){if(LOCKED)return;try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(j)applyState(j)}catch(e){}})();
+if(LOCKED){lkPrep();lk('unlock')}else draw();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
 </body>
