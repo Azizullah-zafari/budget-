@@ -312,6 +312,16 @@ const DS=`غذا|خواړه|Food
 اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟|کوډ شوي معلومات پرته له پټنوم نه بیرته نه ترلاسه کېږي. که بیک‌اپ فایل لرئ، وروسته له پاکولو یې بیرته راوړلای شئ. ټول معلومات پاک شي؟|Encrypted data cannot be recovered without the PIN. If you have a backup file you can restore it after erasing. Erase all data?
 مطمئن هستید؟ این کار قابل بازگشت نیست.|ډاډه یاست؟ دا کار بیرته نه کېږي.|Are you sure? This cannot be undone.
 فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.|د بیک‌اپ فایل کوډ نه کېږي؛ په خوندي ځای کې یې وساتئ.|The backup file is not encrypted; keep it somewhere safe.
+امروز موعد است|نن د ورکړې ورځ ده|Due today
+فردا موعد است|سبا د ورکړې ورځ ده|Due tomorrow
+روز موعد در ماه|په میاشت کې د ورکړې ورځ|Due day of the month
+روز موعد را بین ۱ تا ۳۱ وارد کنید|د ورکړې ورځ له ۱ نه تر ۳۱ پورې ولیکئ|Enter a due day between 1 and 31
+ذخیره شد و قبض ماهانه ساخته شد|خوندي شو او میاشتنی بل جوړ شو|Saved. A monthly bill was created
+این قبض ماهانه حذف شود؟|دا میاشتنی بل دې حذف شي؟|Delete this monthly bill?
+یادآوری قبض‌ها خاموش است|د بلونو یادونه بنده ده|Bill reminders are off
+قبض نزدیکی ندارید|نژدې بلونه نلرئ|No bills due soon
+هشدار در برنامه، یک روز قبل از موعد|په اپ کې خبرداری، یوه ورځ مخکې له وخته|In-app alert, one day before the due date
+از ماه بعد در قبض‌های پیش رو یادآوری می‌شود|له راتلونکې میاشتې په راتلونکو بلونو کې یادونه کېږي|From next month it shows up in upcoming bills
 با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟|د بیرته راوړلو سره اوسني معلومات بدلېږي. ادامه ورکوئ؟|Restoring will replace your current data. Continue?
 گزارش PDF آماده شد|PDF راپور چمتو شو|PDF report ready
 در نسخه اصلی: ثبت قرض جدید|په اصلي نسخه کې: نوی پور ثبتول|In the full version: add a new debt
@@ -358,6 +368,8 @@ const RX=[
 [/^مصرف از درآمد بیشتر شده؛ بودجه بخشها را بازبینی کنید\.$/,m=>['لګښت له عاید زیات شوی؛ د برخو بودیجه بیا وګورئ.','Spending is higher than income; review your category budgets.']],
 [/^(\S+) (حمل|ثور|جوزا|سرطان|اسد|سنبله|میزان|عقرب|قوس|جدی|دلو|حوت) (\S+)$/,m=>[`${m[1]} ${t1(m[2])} ${m[3]}`,`${m[1]} ${t1(m[2])} ${m[3]}`]],
 [/^(حمل|ثور|جوزا|سرطان|اسد|سنبله|میزان|عقرب|قوس|جدی|دلو|حوت) (\S+)$/,m=>[`${t1(m[1])} ${m[2]}`,`${t1(m[1])} ${m[2]}`]],
+[/^(\S+) روز تأخیر$/,m=>[`${m[1]} ورځې ځنډ`,`${m[1]} ${m[1]==='۱'?'day':'days'} late`]],
+[/^(\S+) (حمل|ثور|جوزا|سرطان|اسد|سنبله|میزان|عقرب|قوس|جدی|دلو|حوت)$/,m=>[`${m[1]} ${t1(m[2])}`,`${m[1]} ${t1(m[2])}`]],
 [/^بودجه (.+)$/,m=>[`د ${t1(m[1])} بودیجه`,`${t1(m[1])} budget`]]
 ];
 function t1(p){const z=p.replace(/\u200c/g,''),i=S.lang==='ps'?0:1,e=D[z];if(e)return e[i];for(const[r,f]of RX){const m=z.match(r);if(m)return f(m)[i]}return p}
@@ -371,7 +383,7 @@ home(){
  <svg width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="${fa(p)} درصد مصرف شده"><circle cx="42" cy="42" r="34" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="9"/><circle cx="42" cy="42" r="34" fill="none" stroke="#F2B544" stroke-width="9" stroke-linecap="round" stroke-dasharray="${d} 214" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" fill="#fff" font-size="15" font-weight="800" font-family="Vazirmatn,Tahoma">${fa(p)}٪</text></svg></div>
  <div class="st"><div>درآمد<b>${fa(i)}</b></div><div>مصرف<b>${fa(e)}</b></div></div></div>
  <div class="qa"><button onclick="add('e')">${qt('bag','#D9455F')}مصرف</button><button onclick="add('i')">${qt('inc','#12A37F')}درآمد</button><button onclick="go('debts')">${qt('swap','#1F3C88')}قرض‌ها</button><button onclick="go('goals')">${qt('target','#D99A1E')}هدف‌ها</button></div>
- ${bills.length?`<h2>قبض‌های پیش رو</h2><div class="card">${bills.map((b,k)=>`<div class="row">${tile(b.i,'#D99A1E')}<div class="m"><b>${b.n}</b><span>${b.d}</span></div><div class="am">${fa(b.a)}</div><button class="sm" onclick="pay(${k})">پرداخت</button></div>`).join('')}</div>`:''}
+ ${S.rem&&dsoon()?`<div class="tip" role="status" style="display:flex;gap:8px;align-items:center;font-weight:600">${ic('bell',18)}<span>${fa(dsoon())} قبض نزدیک است</span></div>`:''}${dues().length?`<h2>قبض‌های پیش رو</h2><div class="card">${dues().map(x=>`<div class="row">${tile(P[x.b.i]?x.b.i:'receipt','#D99A1E')}<div class="m"><b>${esc(x.b.n)}</b><span>${fa(x.dd)} ${MN[x.m-1]}</span><span style="margin-inline-start:8px;color:${x.left<0?'var(--red)':x.left<=1?'#D99A1E':'var(--mute)'}">${dtxt(x.left)}</span></div><div class="am">${fa(x.b.a)}</div><button class="sm" onclick="pay(${x.k})">پرداخت</button><button class="sm" aria-label="حذف" onclick="delb(${x.k})">${ic('trash',16)}</button></div>`).join('')}</div>`:''}
  <h2>بودجه بخش‌ها<a onclick="go('budget')">همه</a></h2><div class="card">${CATS.slice(0,3).map(c=>{const s=spent(c[0]);return `<div style="margin-bottom:12px"><div class="sp"><span style="color:var(--ink);display:inline-flex;align-items:center;gap:7px">${ic(c[1],18)}${esc(c[0])}</span><span>${lim[c[0]]?`${fa(s)} از ${fa(lim[c[0]])}`:`${fa(s)} · بدون بودجه`}</span></div><div class="bar"><i class="${lv(s,lim[c[0]])}" style="width:${lim[c[0]]?Math.min(100,s/lim[c[0]]*100):0}%"></i></div></div>`}).join('')}</div>
  <h2>آخرین ثبت‌ها<a onclick="go('tx')">همه</a></h2><div class="card">${tx.slice().reverse().slice(0,4).map(row).join('')}</div>`},
 tx(){
@@ -384,7 +396,7 @@ add(){
  </div>
  <h2>بخش</h2><div class="chips">${cs.map((c,k)=>`<button class="${c[0]===S.cat?'on':''}" onclick="pc(${k})">${ic(c[1],17)}${esc(c[0])}</button>`).join('')}<button onclick="nc('add')" style="border-style:dashed;color:var(--lap)">${ic('plus',16)}بخش جدید</button></div>
  <input class="fld" id="nt" placeholder="توضیح (اختیاری)" value="${esc(S.dn||'')}">
- ${S.kind==='e'?`<div class="card"><div class="row" style="border:0;padding:0"><div class="m"><b>هر ماه تکرار شود</b><span>برای کرایه و قبض‌ها</span></div><button class="tg ${S.rec?'on':''}" role="switch" aria-checked="${S.rec}" aria-label="تکرار ماهانه" onclick="S.rec=!S.rec;keep()"></button></div></div>`:''}
+ ${S.kind==='e'?`<div class="card"><div class="row" style="border:0;padding:0"><div class="m"><b>هر ماه تکرار شود</b><span>برای کرایه و قبض‌ها</span></div><button class="tg ${S.rec?'on':''}" role="switch" aria-checked="${S.rec}" aria-label="تکرار ماهانه" onclick="S.rec=!S.rec;keep()"></button></div>${S.rec?`<input class="fld" id="rdd" inputmode="numeric" autocomplete="off" placeholder="روز موعد در ماه" aria-label="روز موعد در ماه" value="${esc(S.rdd||'')}" style="margin:12px 0 0"><p class="lkn" style="margin-top:8px;text-align:start">از ماه بعد در قبض‌های پیش رو یادآوری می‌شود</p>`:''}</div>`:''}
  <button class="btn ${S.kind==='i'?'g':''}" onclick="save()">ذخیره</button>`},
 budget(){
  const e=sum('e'),L=Object.values(lim).reduce((a,b)=>a+b,0);
@@ -417,7 +429,7 @@ more(){
  return `<div class="card">${L.map(x=>`<div class="row" onclick="go('${x[0]}')" style="cursor:pointer">${tile(x[1],'#1F3C88')}<div class="m"><b>${x[2]}</b><span>${x[3]}</span></div><span class="flip" style="color:var(--mute);display:grid">${ic('left',18)}</span></div>`).join('')}</div>`},
 settings(){
  const T=(k,t,s)=>`<div class="row"><div class="m"><b>${t}</b><span>${s}</span></div><button class="tg ${S[k]?'on':''}" role="switch" aria-checked="${!!S[k]}" aria-label="${t}" onclick="tgl('${k}')"></button></div>`;
- return `<div class="card">${T('dark','حالت شب','برای استفاده شبانه')}${T('pin','قفل با رمز','حفظ حریم خصوصی')}${T('rem','یادآوری قبض‌ها','یک روز قبل از موعد')}</div>
+ return `<div class="card">${T('dark','حالت شب','برای استفاده شبانه')}${T('pin','قفل با رمز','حفظ حریم خصوصی')}${T('rem','یادآوری قبض‌ها','هشدار در برنامه، یک روز قبل از موعد')}</div>
  <div class="card"><div class="row"><div class="m"><b>واحد پول</b></div><span class="pill on">افغانی (AFN)</span></div><div class="row"><div class="m"><b>زبان</b></div><div style="display:flex;gap:6px">${[['fa','دری'],['ps','پښتو'],['en','English']].map(l=>`<button class="pill ${S.lang===l[0]?'on':''}" onclick="sl('${l[0]}')">${l[1]}</button>`).join('')}</div></div></div>
  <button class="btn" onclick="bk()">پشتیبان‌گیری از اطلاعات</button>
  <button class="btn g" style="margin-top:10px" onclick="$('rf').click()">بازگردانی از فایل پشتیبان</button>
@@ -428,24 +440,32 @@ const T={home:['بودجه‌یار','عقرب ۱۴۰۵'],tx:['همه ثبت‌�
 const MAIN=['home','budget','goals','more'];
 function draw(){
  const t=S.scr==='home'?[T.home[0],(o=>MN[o.m-1]+' '+pd(o.y))(sol(new Date()))]:T[S.scr];
- $('hd').innerHTML=(MAIN.includes(S.scr)?'':`<button class="ib flip" aria-label="بازگشت" onclick="back()">${ic('chev',20)}</button>`)+`<h1>${t[0]}${t[1]?`<small>${t[1]}</small>`:''}</h1>`+(S.scr==='home'?`<button class="ib" aria-label="اعلان‌ها" onclick="toast('۲ قبض نزدیک است')">${ic('bell',20)}</button>`:'');
+ $('hd').innerHTML=(MAIN.includes(S.scr)?'':`<button class="ib flip" aria-label="بازگشت" onclick="back()">${ic('chev',20)}</button>`)+`<h1>${t[0]}${t[1]?`<small>${t[1]}</small>`:''}</h1>`+(S.scr==='home'?`<button class="ib" aria-label="اعلان‌ها" onclick="bell()">${ic('bell',20)}</button>`:'');
  const m=$('mn');m.style.animation='none';m.offsetWidth;m.style.animation='';m.innerHTML=V[S.scr]();m.scrollTop=0;
  const n=(k,i,l)=>`<button class="${S.scr===k?'on':''}" onclick="go('${k}')"><span>${ic(i,23)}</span>${l}</button>`;
  $('nv').innerHTML=n('home','home','خانه')+n('budget','pie','بودجه')+`<button class="fab" aria-label="ثبت جدید" onclick="add(S.kind)">${ic('plus',26)}</button>`+n('goals','target','هدف‌ها')+n('more','grid','بیشتر');[$('hd'),m,$('nv')].forEach(loc);persist()}
 function go(s){S.prev=S.scr;S.scr=s;draw()}
 function back(){S.scr=S.scr==='newcat'?(S.from||'home'):(({tx:'home',add:'home',debts:'more',report:'more',settings:'more'})[S.scr]||'home');draw()}
 function add(k){if(S.scr!=='add'||S.kind!==k){S.cat=(k==='e'?CATS:INC)[0][0];S.da='';S.dn=''}S.kind=k;S.scr='add';draw()}
-function keep(){const a=$('amt').value,n=$('nt').value;draw();$('amt').value=a;$('nt').value=n}
+function keep(){const a=$('amt').value,n=$('nt').value;if($('rdd'))S.rdd=$('rdd').value;draw();$('amt').value=a;$('nt').value=n}
 function q(v){const a=$('amt');a.value=(parseInt(a.value.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),10)||0)+v}
 function save(){
  const a=parseInt($('amt').value.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),10);
  if(!a||a<=0){toast('مبلغ را وارد کنید');$('amt').focus();return}
+ let dd=0;if(S.kind==='e'&&S.rec){dd=parseInt(($('rdd')?$('rdd').value:'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)),10);if(!(dd>=1&&dd<=31)){toast('روز موعد را بین ۱ تا ۳۱ وارد کنید');if($('rdd'))$('rdd').focus();return}}
  tx.push({id:++id,t:S.kind,a,c:S.cat,n:$('nt').value.trim(),d:fmtD(sol(new Date())),ym:ymNow()});
- const over=S.kind==='e'&&lim[S.cat]&&spent(S.cat)>lim[S.cat];S.rec=false;S.da='';S.dn='';S.scr='home';draw();
- toast(over?`ذخیره شد. بودجه ${S.cat} تمام شده است`:'ذخیره شد')}
+ if(dd)bills.push({id:++id,n:$('nt').value.trim()||S.cat,a,c:S.cat,i:(CATS.find(c=>c[0]===S.cat)||[0,'receipt'])[1],dd,paid:ymNow()});
+ const over=S.kind==='e'&&lim[S.cat]&&spent(S.cat)>lim[S.cat];S.rec=false;S.rdd='';S.da='';S.dn='';S.scr='home';draw();
+ toast(over?`ذخیره شد. بودجه ${S.cat} تمام شده است`:dd?'ذخیره شد و قبض ماهانه ساخته شد':'ذخیره شد')}
 function del(i){tx=tx.filter(x=>x.id!==i);toast('حذف شد');draw()}
-function pay(k){const b=bills.splice(k,1)[0];tx.push({id:++id,t:'e',a:b.a,c:b.c,n:b.n,d:fmtD(sol(new Date())),ym:ymNow()});toast('قبض پرداخت شد');draw()}
+function pay(k){const b=bills[k];if(!b)return;tx.push({id:++id,t:'e',a:b.a,c:b.c,n:b.n,d:fmtD(sol(new Date())),ym:ymNow()});b.paid=ymNow();toast('قبض پرداخت شد');draw()}
 const used=c=>tx.some(x=>x.t==='e'&&x.c===c)||bills.some(b=>b.c===c);
+const dim=m=>m<=6?31:m<=11?30:29;
+function dues(){const o=sol(new Date()),y=ymNow();return bills.map((b,k)=>{const dd=Math.min(b.dd,dim(o.m));return{b,k,dd,m:o.m,left:dd-o.d,paid:b.paid===y}}).filter(x=>!x.paid).sort((a,b)=>a.left-b.left)}
+const dsoon=()=>dues().filter(x=>x.left<=1).length;
+const dtxt=l=>l<0?`${fa(-l)} روز تأخیر`:l===0?'امروز موعد است':l===1?'فردا موعد است':`${fa(l)} روز دیگر`;
+function delb(k){if(!confirm(tx2('این قبض ماهانه حذف شود؟')))return;bills.splice(k,1);toast('حذف شد');draw()}
+function bell(){const n=dsoon();toast(!S.rem?'یادآوری قبض‌ها خاموش است':n?`${fa(n)} قبض نزدیک است`:'قبض نزدیکی ندارید')}
 function lm(k){const c=CATS[k][0],v=pn($('lm'+k).value);if(v)lim[c]=v;else delete lim[c];toast(v?'بودجه تعیین شد':'بودجه برداشته شد');draw()}
 function dc(k){const c=CATS[k][0];if(used(c)){toast('این بخش استفاده شده و حذف نمی‌شود');return}CATS.splice(k,1);delete lim[c];toast('بخش حذف شد');draw()}
 function pc(k){S.cat=(S.kind==='e'?CATS:INC)[k][0];keep()}
@@ -517,7 +537,7 @@ if(mode==='off'){await Q;try{localStorage.setItem('bY1',JSON.stringify(snap()));
 let HT=0;document.addEventListener('visibilitychange',()=>{if(document.hidden){HT=Date.now();return}if(KEY&&HT&&Date.now()-HT>60000&&!$('lk'))lk('relock')});
 function applyState(j){CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}
 function bk(){const b=new Blob([JSON.stringify(snap())],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
-function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
+function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&j.bills.every(b=>typeof b.a==='number'&&typeof b.n==='string'&&b.dd>=1&&b.dd<=31)&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
 function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;delete j.pin;const js=JSON.stringify(j);Q.then(async()=>{try{if(KEY)localStorage.setItem('bY1e',await seal(js));else localStorage.setItem('bY1',js)}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)})};r.onerror=bad;r.readAsText(f)}
 (function(){if(LOCKED)return;try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(j)applyState(j)}catch(e){}})();
 if(LOCKED){lkPrep();lk('unlock')}else draw();
