@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fa-AF" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بودجه‌یار</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1F3C88">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="بودجه‌یار">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#F3F5FA;--card:#fff;--ink:#16213E;--mute:#6B7794;--line:#E3E8F2;--lap:#1F3C88;--em:#12A37F;--gold:#F2B544;--red:#D9455F;--chip:#E9EEF9;--page:#DCE2EE}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1426;--card:#16203A;--ink:#EAF0FF;--mute:#93A0C2;--line:#26335A;--lap:#5B7FE6;--em:#2FD1A6;--chip:#1F2C50;--page:#070C18}}
+:root[data-theme="dark"]{--bg:#0D1426;--card:#16203A;--ink:#EAF0FF;--mute:#93A0C2;--line:#26335A;--lap:#5B7FE6;--em:#2FD1A6;--chip:#1F2C50;--page:#070C18}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--page);color:var(--ink);display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+.ph{width:100%;max-width:410px;height:100%;max-height:820px;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top,0)}
+@media(min-width:520px){.ph{border-radius:36px;border:8px solid #0B1124;box-shadow:0 30px 70px rgba(10,20,50,.3)}}
+.hd{display:flex;align-items:center;gap:10px;padding:14px 18px 8px}
+.hd h1{flex:1;font-size:19px;font-weight:800}
+.hd small{display:block;font-size:12px;color:var(--mute);font-weight:400}
+.ib{width:38px;height:38px;border-radius:12px;border:0;background:var(--card);display:grid;place-items:center;font-size:17px;box-shadow:0 1px 2px rgba(20,30,70,.08)}
+main{flex:1;overflow-y:auto;padding:6px 16px 18px;animation:in .25s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+@media(prefers-reduced-motion:reduce){main{animation:none}}
+.hero{border-radius:24px;padding:18px;color:#fff;background:radial-gradient(circle at 0 0,rgba(242,181,68,.4),transparent 45%),linear-gradient(155deg,#2A4FB0,#14275F);margin-bottom:14px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 14px,transparent 14px 28px);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hr{display:flex;justify-content:space-between;align-items:center}
+.hero .l{font-size:13px;opacity:.8}
+.hero .n{font-size:32px;font-weight:800;line-height:1.3}
+.hero .n small{font-size:14px;font-weight:400;opacity:.8;margin-inline-start:6px}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.st div{background:rgba(255,255,255,.12);border-radius:14px;padding:9px 12px;font-size:12px}
+.st b{display:block;font-size:16px;margin-top:1px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.qa button{border:0;background:var(--card);border-radius:16px;padding:12px 4px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:5px;box-shadow:0 1px 2px rgba(20,30,70,.06)}
+.qa span{width:48px;height:48px;border-radius:16px;display:grid;place-items:center}
+h2{font-size:15px;font-weight:800;margin:4px 2px 10px;display:flex;justify-content:space-between;align-items:center}
+h2 a{font-size:12px;font-weight:600;color:var(--lap);background:none;border:0}
+.card{background:var(--card);border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 1px 2px rgba(20,30,70,.06)}
+.row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row .m{flex:1;min-width:0}.row b{display:block;font-size:14px}.row span{font-size:12px;color:var(--mute)}
+.ic{width:40px;height:40px;border-radius:13px;background:var(--chip);display:grid;place-items:center;font-size:19px;flex:none}
+.am{font-weight:800;font-size:14px}
+.in{color:var(--em)}.out{color:var(--red)}
+.bar{height:9px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;border-radius:9px;background:var(--em);transition:width .4s}
+.bar i.w{background:var(--gold)}.bar i.x{background:var(--red)}
+.sp{display:flex;justify-content:space-between;font-size:12px;color:var(--mute)}
+.pill{border:0;background:var(--chip);color:var(--lap);font-weight:600;font-size:12px;padding:7px 12px;border-radius:99px}
+.pill.on{background:var(--lap);color:#fff}
+.fl{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--chip);border-radius:14px;padding:4px;margin-bottom:14px}
+.seg button{border:0;background:none;padding:10px;border-radius:11px;font-weight:600;color:var(--mute)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.amt{width:100%;font:inherit;font-size:38px;font-weight:800;text-align:center;border:0;background:none;color:var(--ink);direction:ltr;padding:4px}
+.amt:focus{outline:0}
+.amt::placeholder{color:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.chips button{border:1px solid var(--line);background:var(--card);padding:8px 13px;border-radius:99px;font-size:13px}
+.chips button.on{background:var(--lap);border-color:var(--lap);color:#fff}
+.fld{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--ink);margin-bottom:12px}
+.btn{width:100%;border:0;background:var(--lap);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:16px}
+.btn.g{background:var(--em)}
+.sm{border:0;background:var(--chip);color:var(--lap);font-weight:600;font-size:12px;padding:7px 11px;border-radius:10px}
+.stp{display:flex;align-items:center;gap:8px}
+.stp button{width:28px;height:28px;border-radius:9px;border:0;background:var(--chip);color:var(--lap);font-weight:800}
+.tg{width:48px;height:28px;border-radius:99px;border:0;background:var(--line);position:relative;flex:none}
+.tg:after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.tg.on{background:var(--em)}.tg.on:after{inset-inline-start:23px}
+.dn{display:flex;gap:16px;align-items:center}
+.dn i{width:112px;height:112px;border-radius:50%;flex:none;position:relative}
+.dn i:after{content:"";position:absolute;inset:26px;background:var(--card);border-radius:50%}
+.lg{flex:1;font-size:12px}.lg div{display:flex;align-items:center;gap:6px;margin:4px 0}.lg u{width:10px;height:10px;border-radius:3px;flex:none}.lg em{margin-inline-start:auto;font-style:normal;color:var(--mute)}
+.cols{display:flex;align-items:flex-end;gap:10px;height:140px}
+.cols div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px;color:var(--mute);gap:4px}
+.cols i{width:100%;border-radius:9px 9px 3px 3px;background:var(--lap);opacity:.55}
+.cols div:last-child i{opacity:1;background:var(--gold)}
+.tip{background:var(--chip);border-radius:16px;padding:13px;font-size:13px;line-height:1.9;margin-bottom:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.two .card{margin:0}
+nav{display:flex;align-items:center;background:var(--card);padding:6px 8px calc(8px + env(safe-area-inset-bottom,0));border-top:1px solid var(--line)}
+nav button{flex:1;border:0;background:none;color:var(--mute);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0}
+nav button span{width:48px;height:30px;border-radius:15px;display:grid;place-items:center;transition:background .2s}nav button.on span{background:var(--chip)}.fab .i{stroke-width:2.4}.chips button{display:inline-flex;align-items:center;gap:6px}.sm{display:inline-grid;place-items:center}.ib,.ic{color:var(--lap)}.i{flex:none}
+nav button.on{color:var(--lap);font-weight:800}
+nav .fab{flex:none;width:54px;height:54px;border-radius:19px;background:var(--lap);color:#fff;font-size:28px;margin:-24px 6px 0;box-shadow:0 8px 20px rgba(31,60,136,.4);display:grid;place-items:center}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ts{position:absolute;bottom:84px;inset-inline:22px;background:var(--ink);color:var(--bg);padding:12px;border-radius:14px;text-align:center;font-size:14px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none}
+.ts.show{opacity:1;transform:none}
+.em0{text-align:center;color:var(--mute);padding:22px 0;font-size:13px}
+.lmi{width:112px;flex:none;margin:0;padding:9px 8px;text-align:center;font-weight:600;font-size:13px}
+html[dir=ltr] .flip svg{transform:scaleX(-1)}
+@media(max-width:519px){.ph{max-width:none;max-height:none}html,body{height:100dvh}}
+.lk{position:absolute;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto}.lkb{width:100%;max-width:340px;display:grid;gap:12px;text-align:center}.lkn{font-size:13px;color:var(--mute);line-height:1.8}.lkm{min-height:20px;color:var(--red);font-size:14px}.lks{background:none;border:0;color:var(--lap);font-size:14px;padding:8px}.btn:disabled{opacity:.6}
+</style>
+</head>
+<body>
+<div class="ph">
+  <div class="hd" id="hd"></div>
+  <main id="mn"></main>
+  <div class="ts" id="ts"></div>
+  <nav id="nv"></nav>
+</div>
+<script>
+const CATS=[['غذا','food'],['کرایه','home'],['حمل‌ونقل','bus'],['صحت','pill'],['تعلیم','book'],['متفرقه','receipt']];
+const INC=[['معاش','briefcase'],['کار آزاد','wrench'],['دیگر','wallet']];
+const COL=['#1F3C88','#12A37F','#F2B544','#D9455F','#7B61FF','#8A9BB0','#E07B39','#2BA3C4','#B94FA0','#6B8E23'];
+const colr=k=>COL[k%COL.length];
+const ICONS=['food','home','bus','pill','book','receipt','bag','zap','wifi','star','shield','cap','target','wallet','briefcase','wrench'];
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const pn=s=>parseInt(String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,''),10)||0;
+const P={
+food:'<path d="M3 2v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3Zm0 0v7"/>',
+home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v12h14V9"/><path d="M10 21v-6h4v6"/>',
+bus:'<path d="M8 6v6M15 6v6M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2s-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/>',
+pill:'<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>',
+book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/>',
+receipt:'<path d="M4 2v20l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V2l-3 2-2.5-2-2.5 2-2.5-2L7 4Z"/><path d="M8 9h8M8 13h8"/>',
+briefcase:'<rect x="2" y="7" width="20" height="14" rx="2.5"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/>',
+wallet:'<path d="M3 7a2 2 0 0 1 2-2h12v4"/><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M16 13.5h2.5"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+bag:'<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+inc:'<path d="M12 3v12m-5-5 5 5 5-5"/><path d="M4 21h16"/>',
+swap:'<path d="M7 7h13l-4-4"/><path d="M17 17H4l4 4"/>',
+target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+pie:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10Z"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+chart:'<path d="M3 3v18h18"/><path d="M8 17v-5M13 17V7M18 17v-3"/>',
+sliders:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+cap:'<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/>',
+up:'<path d="M7 17 17 7M8 7h9v9"/>',
+down:'<path d="M17 7 7 17M16 17H7V8"/>',
+chev:'<path d="m9 18 6-6-6-6"/>',
+left:'<path d="m15 18-6-6 6-6"/>',
+trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/>',
+zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9Z"/>',
+wifi:'<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><path d="M12 19.5h.01"/>'
+};
+P.pen='<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>';
+const ic=(n,z=22)=>`<svg class="i" width="${z}" height="${z}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const tile=(n,c)=>`<div class="ic" style="color:${c};background:color-mix(in srgb,${c} 15%,transparent)">${ic(n,22)}</div>`;
+const qt=(n,c)=>`<span style="color:${c};background:color-mix(in srgb,${c} 14%,transparent)">${ic(n,24)}</span>`;
+
+let lim={};
+let id=10,tx=[];
+let bills=[];
+let goals=[];
+let debts=[];
+let S={lang:'fa',scr:'home',kind:'e',cat:'غذا',flt:'all',gf:false,rec:false,pin:false,rem:true};
+const fa=n=>{const s=Math.round(n).toLocaleString('en');return S.lang==='en'?s:s.replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]).replace(/,/g,'٬')};
+const sum=t=>tx.filter(x=>x.t===t&&cm(x)).reduce((s,x)=>s+x.a,0);
+const spent=c=>tx.filter(x=>x.t==='e'&&x.c===c&&cm(x)).reduce((s,x)=>s+x.a,0);
+const ico=(x)=>((x.t==='e'?CATS:INC).find(c=>c[0]===x.c)||[0,'receipt'])[1];
+const cl=x=>{if(x.t!=='e')return '#12A37F';const k=CATS.findIndex(c=>c[0]===x.c);return k<0?COL[5]:colr(k)};
+const $=i=>document.getElementById(i);
+const toast=m=>{const t=$('ts');t.textContent=tx2(m);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1700)};
+const row=x=>`<div class="row">${tile(ico(x),cl(x))}<div class="m"><b>${esc(x.n||x.c)}</b><span>${esc(x.c)} · ${x.d}</span></div><div class="am ${x.t==='e'?'out':'in'}">${x.t==='e'?'−':'+'}${fa(x.a)}</div>${S.scr==='tx'?`<button class="sm" aria-label="حذف" onclick="del(${x.id})">${ic('trash',16)}</button>`:''}</div>`;
+const lv=(s,l)=>{if(!l)return '';const p=s/l*100;return p>100?'x':p>80?'w':''};
+
+const DS=`غذا|خواړه|Food
+کرایه|کرایه|Rent
+حمل‌ونقل|ترانسپورت|Transport
+صحت|روغتیا|Health
+تعلیم|تعلیم|Education
+متفرقه|متفرقه|Misc
+معاش|معاش|Salary
+کار آزاد|آزاد کار|Freelance
+دیگر|نور|Other
+باقیمانده این ماه|د دې میاشتې پاتې|Left this month
+افغانی|افغانۍ|AFN
+درآمد|عاید|Income
+مصرف|لګښت|Expense
+قرض‌ها|پورونه|Debts
+هدف‌ها|موخې|Goals
+قبض‌های پیش رو|راتلونکي بلونه|Upcoming bills
+پرداخت|تادیه|Pay
+بودجه بخش‌ها|د برخو بودیجه|Budget by category
+همه|ټول|All
+آخرین ثبت‌ها|وروستي ثبتونه|Latest entries
+برق|برېښنا|Electricity
+انترنت|انټرنیټ|Internet
+اعلان‌ها|خبرتیاوې|Notifications
+بازگشت|شاته|Back
+ثبت جدید|نوی ثبت|New entry
+همه ثبت‌ها|ټول ثبتونه|All entries
+حذف|ړنګول|Delete
+هنوز چیزی ثبت نشده. با دکمه + اولین ثبت را بسازید.|تر اوسه څه نه دي ثبت شوي. د + تڼۍ سره لومړی ثبت جوړ کړئ.|Nothing recorded yet. Tap + to add your first entry.
+مبلغ به افغانی|مبلغ په افغانیو|Amount in AFN
+بخش|برخه|Category
+توضیح (اختیاری)|تشریح (اختیاري)|Note (optional)
+هر ماه تکرار شود|هره میاشت تکرار شي|Repeat every month
+برای کرایه و قبض‌ها|د کرایې او بلونو لپاره|For rent and bills
+تکرار ماهانه|میاشتنی تکرار|Monthly repeat
+ذخیره|خوندي کول|Save
+بخش جدید|نوې برخه|New category
+بودجه ماهانه|میاشتنۍ بودیجه|Monthly budget
+هدف‌های پس‌انداز|د پس\u200cانداز موخې|Savings goals
+بیشتر|نور|More
+گزارش ماه|د میاشتې راپور|Monthly report
+تنظیمات|تنظیمات|Settings
+بودجه‌یار|بودجه\u200cیار|Budgetyar
+عقرب ۱۴۰۵|لړم ۱۴۰۵|Aqrab 1405
+تعیین بودجه|بودیجه وټاکئ|Set budget
+بدون بودجه|بې بودیجې|No budget
+حذف بخش|برخه ړنګول|Delete category
++ بخش جدید|+ نوې برخه|+ New category
+نام بخش مصرف|د لګښت برخې نوم|Expense category name
+نام بخش درآمد|د عایدو برخې نوم|Income category name
+مثلاً لباس، موبایل، هدیه|لکه جامې، موبایل، ډالۍ|e.g. Clothes, Phone, Gifts
+آیکن|انځورنښه|Icon
+بودجه ماهانه (اختیاری)|میاشتنۍ بودیجه (اختیاري)|Monthly budget (optional)
+مبلغ به افغانی؛ بعداً هم می‌توانید تعیین کنید|مبلغ په افغانیو؛ وروسته هم کولای شئ وټاکئ|Amount in AFN; you can also set it later
+ساخت بخش|برخه جوړول|Create category
+نام هدف، مثلاً عروسی یا سفر|د موخې نوم، لکه واده یا سفر|Goal name, e.g. wedding or trip
+مبلغ هدف (افغانی)|د موخې مبلغ (افغانۍ)|Goal amount (AFN)
+ساخت هدف|موخه جوړول|Create goal
++ هدف جدید|+ نوې موخه|+ New goal
+مبلغ پس‌انداز (افغانی)|د پس\u200cانداز مبلغ (افغانۍ)|Amount to save (AFN)
+مبلغ پس‌انداز|د پس\u200cانداز مبلغ|Amount to save
+افزودن|زیاتول|Add
+باید بدهم|باید ورکړم|I owe
+باید بگیرم|باید واخلم|I am owed
+تسویه|تصفیه|Settle
+همه حساب‌ها صاف است|ټول حسابونه صاف دي|All settled
++ قرض جدید|+ نوی پور|+ New debt
+تا آخر ماه|تر میاشتې پورې|Until end of month
+قرض داده‌ام|پور مې ورکړی دی|I lent this
+کاکا احمد|کاکا احمد|Uncle Ahmad
+همسایه|ګاونډی|Neighbor
+مصرف به تفکیک بخش|د برخو له مخې لګښت|Spending by category
+مقایسه چهار ماه|د څلورو میاشتو پرتله|Four-month comparison
+میزان|تله|Mizan
+قوس|ليندۍ|Qaws
+جدی|مرغومی|Jadi
+عقرب|لړم|Aqrab
+هزار|زره|k
+اشتراک‌گذاری گزارش|راپور شریکول|Share report
+طلب و بدهی|پور او پور ورکړه|Debts and loans
+گزارش ماهانه|میاشتنی راپور|Monthly report
+نمودار و مقایسه|چارټ او پرتله|Charts and comparison
+حالت شب، رمز، پشتیبان|شپنی حالت، پټنوم، بیک‌اپ|Dark mode, PIN, backup
+حالت شب|شپنی حالت|Dark mode
+برای استفاده شبانه|د شپې کارونې لپاره|For night use
+قفل با رمز|په پټنوم قفل|PIN lock
+حفظ حریم خصوصی|د محرمیت ساتنه|Keeps your data private
+یادآوری قبض‌ها|د بلونو یادونه|Bill reminders
+یک روز قبل از موعد|یوه ورځ مخکې له موده|One day before due date
+واحد پول|د پیسو واحد|Currency
+افغانی (AFN)|افغانۍ (AFN)|Afghani (AFN)
+زبان|ژبه|Language
+پشتیبان‌گیری از اطلاعات|د معلوماتو بیک‌اپ|Back up your data
+خانه|کور|Home
+بودجه|بودیجه|Budget
+صندوق اضطراری|بیړنی صندوق|Emergency fund
+لوازم مکتب|د ښوونځي سامان|School supplies
+معاش ماه|د میاشتې معاش|Monthly salary
+کار اضافه|اضافي کار|Extra work
+کرایه خانه|د کور کرایه|House rent
+بازار هفته|د اونۍ بازار|Weekly groceries
+کرایه بس|د بس کرایه|Bus fare
+دوا برای مادر|د مور لپاره درمل|Medicine for mother
+امروز|نن|Today
+ویرایش|سمون|Edit
+نام هدف|د موخې نوم|Goal name
+مبلغ پس‌انداز شده (افغانی)|ساتل شوی مبلغ (افغانۍ)|Saved so far (AFN)
+لغو|لغوه|Cancel
+این هدف حذف شود؟|دا موخه ړنګه شي؟|Delete this goal?
+بله، حذف شود|هو، ړنګه شي|Yes, delete
+ذخیره شد|خوندي شو|Saved
+مبلغ را وارد کنید|مبلغ ولیکئ|Enter an amount
+حذف شد|ړنګ شو|Deleted
+قبض پرداخت شد|بل ورکړل شو|Bill paid
+به پس‌انداز اضافه شد|پس\u200cانداز ته زیات شو|Added to savings
+تبریک! به هدف رسیدید|مبارک! موخې ته ورسېدئ|Congrats! You reached your goal
+هدف ساخته شد|موخه جوړه شوه|Goal created
+نام و مبلغ هدف را وارد کنید|د موخې نوم او مبلغ ولیکئ|Enter the goal name and amount
+تسویه شد|تصفیه شو|Settled
+نسخه پشتیبان ذخیره شد|بیک‌اپ خوندي شو|Backup saved
+بازگردانی از فایل پشتیبان|د بیک‌اپ له فایل نه بیرته راوړل|Restore from backup file
+اطلاعات بازگردانی شد|معلومات بیرته راوړل شول|Data restored
+فایل پشتیبان معتبر نیست|د بیک‌اپ فایل معتبر نه دی|Invalid backup file
+رمز خود را وارد کنید|خپل پټنوم دننه کړئ|Enter your PIN
+تنظیم رمز|د پټنوم ټاکل|Set a PIN
+رمز فعلی را وارد کنید|اوسنی پټنوم دننه کړئ|Enter your current PIN
+رمز|پټنوم|PIN
+رمز (حداقل ۶ رقم)|پټنوم (لږ تر لږه ۶ عدده)|PIN (at least 6 digits)
+تکرار رمز|پټنوم بیا ولیکئ|Repeat PIN
+باز کردن|خلاصول|Unlock
+فعال کردن قفل|قفل فعالول|Enable lock
+غیرفعال کردن قفل|قفل غیرفعالول|Disable lock
+لغو|لغوه|Cancel
+رمز را فراموش کرده‌ام|پټنوم مې هېر شوی|I forgot my PIN
+رمز اشتباه است|پټنوم ناسم دی|Wrong PIN
+چند لحظه صبر کنید و دوباره امتحان کنید|یو څو شېبې صبر وکړئ او بیا هڅه وکړئ|Wait a moment and try again
+رمز باید حداقل ۶ رقم باشد|پټنوم باید لږ تر لږه ۶ عدده وي|PIN must be at least 6 characters
+دو رمز یکسان نیست|دوه پټنومونه سره برابر نه دي|The two PINs do not match
+هشدار: اگر رمز را فراموش کنید، اطلاعات قابل بازیابی نیست. حتماً از اطلاعات پشتیبان بگیرید.|خبرداری: که پټنوم مو هېر شي، معلومات بیرته نه ترلاسه کېږي. مهرباني وکړئ بیک‌اپ واخلئ.|Warning: if you forget your PIN, your data cannot be recovered. Make a backup first.
+قفل فعال شد|قفل فعال شو|Lock enabled
+قفل غیرفعال شد|قفل غیرفعال شو|Lock disabled
+این مرورگر از رمزگذاری پشتیبانی نمی‌کند|دا براوزر کوډ کول نه ملاتړ کوي|This browser does not support encryption (https is required)
+اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟|کوډ شوي معلومات پرته له پټنوم نه بیرته نه ترلاسه کېږي. که بیک‌اپ فایل لرئ، وروسته له پاکولو یې بیرته راوړلای شئ. ټول معلومات پاک شي؟|Encrypted data cannot be recovered without the PIN. If you have a backup file you can restore it after erasing. Erase all data?
+مطمئن هستید؟ این کار قابل بازگشت نیست.|ډاډه یاست؟ دا کار بیرته نه کېږي.|Are you sure? This cannot be undone.
+فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.|د بیک‌اپ فایل کوډ نه کېږي؛ په خوندي ځای کې یې وساتئ.|The backup file is not encrypted; keep it somewhere safe.
+با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟|د بیرته راوړلو سره اوسني معلومات بدلېږي. ادامه ورکوئ؟|Restoring will replace your current data. Continue?
+گزارش PDF آماده شد|PDF راپور چمتو شو|PDF report ready
+در نسخه اصلی: ثبت قرض جدید|په اصلي نسخه کې: نوی پور ثبتول|In the full version: add a new debt
+بودجه تعیین شد|بودیجه وټاکل شوه|Budget set
+بودجه برداشته شد|بودیجه لرې شوه|Budget removed
+این بخش استفاده شده و حذف نمی‌شود|دا برخه کارول شوې او نه ړنګېږي|This category is in use and can't be deleted
+بخش حذف شد|برخه ړنګه شوه|Category deleted
+نام بخش را بنویسید|د برخې نوم ولیکئ|Enter a category name
+این بخش از قبل هست|دا برخه مخکې شته|This category already exists
+هدف ویرایش شد|موخه سمه شوه|Goal updated
+هدف حذف شد|موخه ړنګه شوه|Goal deleted
+نام شخص|د کس نوم|Person's name
+مبلغ (افغانی)|مبلغ (افغانۍ)|Amount (AFN)
+نام و مبلغ را وارد کنید|نوم او مبلغ ولیکئ|Enter a name and amount
+قرض ثبت شد|پور ثبت شو|Debt saved
+تاریخ|نیټه|Date
+تاریخ دیگر|بله نیټه|Other date
+دیروز|پرون|Yesterday
+حمل|وری|Hamal
+ثور|غویی|Sawr
+جوزا|غبرګولی|Jawza
+سرطان|چنګاښ|Saratan
+اسد|زمری|Asad
+سنبله|وږی|Sonbola
+دلو|سلواغه|Dalw
+حوت|کب|Hut
+هنوز مصرفی ثبت نشده|تر اوسه هیڅ لګښت نه دی ثبت شوی|No expenses recorded yet`;
+const D={};DS.split('\n').forEach(l=>{const a=l.split('|');D[a[0].replace(/\u200c/g,'')]=[a[1],a[2]]});
+const RX=[
+[/^(\S+) از (\S+)$/,m=>[`${m[1]} له ${m[2]}`,`${m[1]} of ${m[2]}`]],
+[/^(\S+) مصرف$/,m=>[`${m[1]} لګښت`,`${m[1]} spent`]],
+[/^(\S+) بیشتر از بودجه$/,m=>[`${m[1]} له بودیجې زیات`,`${m[1]} over budget`]],
+[/^(\S+) روز دیگر$/,m=>[`${m[1]} ورځې وروسته`,`in ${m[1]} days`]],
+[/^(\S+) عقرب$/,m=>[`${m[1]} لړم`,`${m[1]} Aqrab`]],
+[/^(\S+) درصد مصرف شده$/,m=>[`${m[1]} سلنه لګول شوي`,`${m[1]}% spent`]],
+[/^(\S+) قبض نزدیک است$/,m=>[`${m[1]} بلونه نژدې دي`,`${m[1]} bills are due soon`]],
+[/^(\S+)هزار$/,m=>[`${m[1]} زره`,`${m[1]}k`]],
+[/^ذخیره شد\. بودجه (.+) تمام شده است$/,m=>[`خوندي شو. د ${t1(m[1])} بودیجه پای ته ورسېده`,`Saved. The ${t1(m[1])} budget is used up`]],
+[/^بخش «(.+)» ساخته شد$/,m=>[`«${m[1]}» برخه جوړه شوه`,`Category “${m[1]}” created`]],
+[/^کل بودجه ماه (\S+) افغانی است\. تا حال (\S+) مصرف شده و (\S+) باقی مانده\.$/,m=>[`د میاشتې ټوله بودیجه ${m[1]} افغانۍ ده. تر اوسه ${m[2]} لګول شوي او ${m[3]} پاتې دي.`,`Your monthly budget is ${m[1]} AFN. You have spent ${m[2]} so far and ${m[3]} is left.`]],
+[/^برای هر بخش خودتان تعیین کنید چقدر پول مصرف شود\. تا حال (\S+) افغانی مصرف شده است\.$/,m=>[`د هرې برخې لپاره پخپله وټاکئ څومره پیسې دې لګول شي. تر اوسه ${m[1]} افغانۍ لګول شوې دي.`,`Decide how much money each category can spend. So far you have spent ${m[1]} AFN.`]],
+[/^بیشترین مصرف شما (.+) است \((\S+) افغانی\)\.$/,m=>[`ستاسو تر ټولو ډیر لګښت ${t1(m[1])} دی (${m[2]} افغانۍ).`,`Your biggest expense is ${t1(m[1])} (${m[2]} AFN).`]],
+[/^این ماه (\S+) افغانی باقی مانده؛ پیشنهاد میکنیم نصف آن را به هدفها اضافه کنید\.$/,m=>[`دا میاشت ${m[1]} افغانۍ پاتې دي؛ وړاندیز کوو چې نیمایي یې موخو ته زیات کړئ.`,`${m[1]} AFN is left this month; we suggest adding half of it to your goals.`]],
+[/^مصرف از درآمد بیشتر شده؛ بودجه بخشها را بازبینی کنید\.$/,m=>['لګښت له عاید زیات شوی؛ د برخو بودیجه بیا وګورئ.','Spending is higher than income; review your category budgets.']],
+[/^(\S+) (حمل|ثور|جوزا|سرطان|اسد|سنبله|میزان|عقرب|قوس|جدی|دلو|حوت) (\S+)$/,m=>[`${m[1]} ${t1(m[2])} ${m[3]}`,`${m[1]} ${t1(m[2])} ${m[3]}`]],
+[/^(حمل|ثور|جوزا|سرطان|اسد|سنبله|میزان|عقرب|قوس|جدی|دلو|حوت) (\S+)$/,m=>[`${t1(m[1])} ${m[2]}`,`${t1(m[1])} ${m[2]}`]],
+[/^بودجه (.+)$/,m=>[`د ${t1(m[1])} بودیجه`,`${t1(m[1])} budget`]]
+];
+function t1(p){const z=p.replace(/\u200c/g,''),i=S.lang==='ps'?0:1,e=D[z];if(e)return e[i];for(const[r,f]of RX){const m=z.match(r);if(m)return f(m)[i]}return p}
+function tx2(s){if(S.lang==='fa')return s;let o=s.split(' · ').map(t1).join(' · ');if(S.lang==='en')o=o.replace(/٪/g,'%').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d));return o}
+function loc(el){if(S.lang==='fa')return;const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),L=[];let n;while(n=w.nextNode())L.push(n);L.forEach(n=>{const s=n.nodeValue.trim();if(s)n.nodeValue=n.nodeValue.replace(s,()=>tx2(s))});el.querySelectorAll('[placeholder],[aria-label]').forEach(e=>['placeholder','aria-label'].forEach(a=>{const v=e.getAttribute(a);if(v)e.setAttribute(a,tx2(v))}))}
+function sl(l){S.lang=l;const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[l];h.dir=l==='en'?'ltr':'rtl';draw()}
+const V={
+home(){
+ const i=sum('i'),e=sum('e'),p=i?Math.min(100,e/i*100):0,d=213.6*p/100;
+ return `<div class="hero"><div class="hr"><div><div class="l">باقیمانده این ماه</div><div class="n">${fa(i-e)}<small>افغانی</small></div></div>
+ <svg width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="${fa(p)} درصد مصرف شده"><circle cx="42" cy="42" r="34" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="9"/><circle cx="42" cy="42" r="34" fill="none" stroke="#F2B544" stroke-width="9" stroke-linecap="round" stroke-dasharray="${d} 214" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" fill="#fff" font-size="15" font-weight="800" font-family="Vazirmatn,Tahoma">${fa(p)}٪</text></svg></div>
+ <div class="st"><div>درآمد<b>${fa(i)}</b></div><div>مصرف<b>${fa(e)}</b></div></div></div>
+ <div class="qa"><button onclick="add('e')">${qt('bag','#D9455F')}مصرف</button><button onclick="add('i')">${qt('inc','#12A37F')}درآمد</button><button onclick="go('debts')">${qt('swap','#1F3C88')}قرض‌ها</button><button onclick="go('goals')">${qt('target','#D99A1E')}هدف‌ها</button></div>
+ ${bills.length?`<h2>قبض‌های پیش رو</h2><div class="card">${bills.map((b,k)=>`<div class="row">${tile(b.i,'#D99A1E')}<div class="m"><b>${b.n}</b><span>${b.d}</span></div><div class="am">${fa(b.a)}</div><button class="sm" onclick="pay(${k})">پرداخت</button></div>`).join('')}</div>`:''}
+ <h2>بودجه بخش‌ها<a onclick="go('budget')">همه</a></h2><div class="card">${CATS.slice(0,3).map(c=>{const s=spent(c[0]);return `<div style="margin-bottom:12px"><div class="sp"><span style="color:var(--ink);display:inline-flex;align-items:center;gap:7px">${ic(c[1],18)}${esc(c[0])}</span><span>${lim[c[0]]?`${fa(s)} از ${fa(lim[c[0]])}`:`${fa(s)} · بدون بودجه`}</span></div><div class="bar"><i class="${lv(s,lim[c[0]])}" style="width:${lim[c[0]]?Math.min(100,s/lim[c[0]]*100):0}%"></i></div></div>`}).join('')}</div>
+ <h2>آخرین ثبت‌ها<a onclick="go('tx')">همه</a></h2><div class="card">${tx.slice().reverse().slice(0,4).map(row).join('')}</div>`},
+tx(){
+ const l=tx.filter(x=>S.flt==='all'||x.t===S.flt).slice().reverse();
+ return `<div class="fl">${[['all','همه'],['e','مصرف'],['i','درآمد']].map(f=>`<button class="pill ${S.flt===f[0]?'on':''}" onclick="S.flt='${f[0]}';draw()">${f[1]}</button>`).join('')}</div><div class="card">${l.length?l.map(row).join(''):'<div class="em0">هنوز چیزی ثبت نشده. با دکمه + اولین ثبت را بسازید.</div>'}</div>`},
+add(){
+ const cs=S.kind==='e'?CATS:INC;
+ return `<div class="seg"><button class="${S.kind==='e'?'on':''}" onclick="add('e')">مصرف</button><button class="${S.kind==='i'?'on':''}" onclick="add('i')">درآمد</button></div>
+ <div class="card"><div class="sp" style="justify-content:center">مبلغ به افغانی</div><input class="amt" id="amt" inputmode="numeric" placeholder="۰" autocomplete="off" value="${esc(S.da||'')}">
+ </div>
+ <h2>بخش</h2><div class="chips">${cs.map((c,k)=>`<button class="${c[0]===S.cat?'on':''}" onclick="pc(${k})">${ic(c[1],17)}${esc(c[0])}</button>`).join('')}<button onclick="nc('add')" style="border-style:dashed;color:var(--lap)">${ic('plus',16)}بخش جدید</button></div>
+ <input class="fld" id="nt" placeholder="توضیح (اختیاری)" value="${esc(S.dn||'')}">
+ ${S.kind==='e'?`<div class="card"><div class="row" style="border:0;padding:0"><div class="m"><b>هر ماه تکرار شود</b><span>برای کرایه و قبض‌ها</span></div><button class="tg ${S.rec?'on':''}" role="switch" aria-checked="${S.rec}" aria-label="تکرار ماهانه" onclick="S.rec=!S.rec;keep()"></button></div></div>`:''}
+ <button class="btn ${S.kind==='i'?'g':''}" onclick="save()">ذخیره</button>`},
+budget(){
+ const e=sum('e'),L=Object.values(lim).reduce((a,b)=>a+b,0);
+ return `<div class="tip">${L?`کل بودجه ماه ${fa(L)} افغانی است. تا حال ${fa(e)} مصرف شده و ${fa(Math.max(0,L-e))} باقی مانده.`:`برای هر بخش خودتان تعیین کنید چقدر پول مصرف شود. تا حال ${fa(e)} افغانی مصرف شده است.`}</div><div class="card">${CATS.map((c,k)=>{const s=spent(c[0]),l=lim[c[0]]||0;return `<div style="padding:8px 0 12px"><div class="row" style="border:0;padding:0">${tile(c[1],colr(k))}<div class="m"><b>${esc(c[0])}</b><span>${l?`${fa(s)} از ${fa(l)}`:`${fa(s)} مصرف · بدون بودجه`}</span></div><input class="fld lmi" id="lm${k}" inputmode="numeric" placeholder="تعیین بودجه" aria-label="بودجه ${esc(c[0])}" value="${l?fa(l):''}" onchange="lm(${k})">${used(c[0])?'':`<button class="sm" aria-label="حذف بخش" onclick="dc(${k})">${ic('trash',16)}</button>`}</div><div class="bar"><i class="${lv(s,l)}" style="width:${l?Math.min(100,s/l*100):0}%"></i></div>${l&&s>l?`<div class="sp out" style="margin-top:5px">${fa(s-l)} بیشتر از بودجه</div>`:''}</div>`}).join('')}</div><button class="btn" onclick="nc('budget')">+ بخش جدید</button>`},
+goals(){
+ return goals.map((g,k)=>{if(S.ge===k)return `<div class="card"><div class="sp" style="margin-bottom:4px">نام هدف</div><input class="fld" id="en${k}" value="${esc(g.n)}"><div class="sp" style="margin-bottom:4px">مبلغ هدف (افغانی)</div><input class="fld" id="et${k}" inputmode="numeric" value="${g.tg}"><div class="sp" style="margin-bottom:4px">مبلغ پس‌انداز شده (افغانی)</div><input class="fld" id="es${k}" inputmode="numeric" value="${g.s}"><div style="display:flex;gap:8px"><button class="btn g" onclick="gs(${k})">ذخیره</button><button class="btn" style="background:var(--chip);color:var(--lap)" onclick="S.ge=-1;draw()">لغو</button></div></div>`;const p=Math.min(100,g.s/g.tg*100);return `<div class="card"><div class="row" style="border:0;padding:0">${tile(g.e,COL[k%6])}<div class="m"><b>${esc(g.n)}</b><span>${fa(g.s)} از ${fa(g.tg)}</span></div><b class="in">${fa(p)}٪</b><button class="sm" aria-label="ویرایش" onclick="ge(${k})">${ic('pen',16)}</button><button class="sm" aria-label="حذف" onclick="gd(${k})">${ic('trash',16)}</button></div><div class="bar"><i style="width:${p}%"></i></div>${S.gd===k?`<div class="tip" style="margin:12px 0 0">این هدف حذف شود؟</div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn" style="background:var(--red)" onclick="gx(${k})">بله، حذف شود</button><button class="btn" style="background:var(--chip);color:var(--lap)" onclick="S.gd=-1;draw()">لغو</button></div>`:''}<div style="display:flex;gap:8px;margin-top:12px${S.gd===k?';display:none':''}"><input class="fld" style="margin:0" id="dp${k}" inputmode="numeric" placeholder="مبلغ پس‌انداز (افغانی)" aria-label="مبلغ پس‌انداز"><button class="sm" style="flex:none;padding:0 16px" onclick="dep(${k})">افزودن</button></div></div>`}).join('')+
+ (S.gf?`<div class="card"><input class="fld" id="gn" placeholder="نام هدف، مثلاً عروسی یا سفر"><input class="fld" id="gt" inputmode="numeric" placeholder="مبلغ هدف (افغانی)"><button class="btn g" onclick="ng()">ساخت هدف</button></div>`:`<button class="btn" onclick="S.gf=true;draw()">+ هدف جدید</button>`)},
+debts(){
+ const o=debts.filter(d=>d.dir==='owe').reduce((s,d)=>s+d.a,0),l=debts.filter(d=>d.dir==='lent').reduce((s,d)=>s+d.a,0);
+ return `<div class="two"><div class="card"><div class="sp">باید بدهم</div><div class="am out" style="font-size:20px">${fa(o)}</div></div><div class="card"><div class="sp">باید بگیرم</div><div class="am in" style="font-size:20px">${fa(l)}</div></div></div>
+ <div class="card">${debts.length?debts.map(d=>`<div class="row">${tile(d.dir==='owe'?'up':'down',d.dir==='owe'?'#D9455F':'#12A37F')}<div class="m"><b>${esc(d.who)}</b><span>${fmtD(d.dt)}${d.note?` · ${esc(d.note)}`:''}</span></div><div class="am ${d.dir==='owe'?'out':'in'}">${fa(d.a)}</div><button class="sm" onclick="settle(${d.id})">تسویه</button></div>`).join(''):'<div class="em0">همه حساب‌ها صاف است</div>'}</div>
+ ${S.df?`<div class="card"><div class="seg"><button class="${S.dd==='owe'?'on':''}" onclick="S.dd='owe';dk()">باید بدهم</button><button class="${S.dd==='lent'?'on':''}" onclick="S.dd='lent';dk()">باید بگیرم</button></div><input class="fld" id="dw" placeholder="نام شخص" value="${esc(S.dw||'')}"><input class="fld" id="da2" inputmode="numeric" placeholder="مبلغ (افغانی)" value="${esc(S.dm||'')}"><div class="sp" style="margin-bottom:6px">تاریخ</div><div class="chips" style="margin:0 0 10px">${[['t','امروز',sol(new Date())],['y','دیروز',sol(new Date(Date.now()-864e5))],['o','تاریخ دیگر']].map(c=>`<button class="${S.dsel===c[0]?'on':''}" onclick="dpk('${c[0]}')">${c[1]}${c[2]?` · ${fmtD(c[2])}`:''}</button>`).join('')}</div>${S.dsel==='o'?`<div style="display:flex;gap:8px;margin-bottom:12px"><select class="fld" id="sd" style="margin:0" onchange="dsl()">${Array.from({length:31},(_,i)=>`<option value="${i+1}" ${S.ddt.d===i+1?'selected':''}>${pd(i+1)}</option>`).join('')}</select><select class="fld" id="sm" style="margin:0" onchange="dsl()">${MN.map((n,i)=>`<option value="${i+1}" ${S.ddt.m===i+1?'selected':''}>${n}</option>`).join('')}</select><select class="fld" id="sy" style="margin:0" onchange="dsl()">${[0,1,2,3].map(k=>{const y=sol(new Date()).y-k;return `<option value="${y}" ${S.ddt.y===y?'selected':''}>${pd(y)}</option>`}).join('')}</select></div>`:''}<input class="fld" id="dnt" placeholder="توضیح (اختیاری)" value="${esc(S.dq||'')}"><div style="display:flex;gap:8px"><button class="btn g" onclick="sd()">ذخیره</button><button class="btn" style="background:var(--chip);color:var(--lap)" onclick="S.df=false;draw()">لغو</button></div></div>`:`<button class="btn" onclick="S.df=true;S.dd='owe';S.dw=S.dm=S.dq='';S.dsel='t';S.ddt=sol(new Date());draw()">+ قرض جدید</button>`}`},
+report(){
+ const e=sum('e'),i=sum('i'),cs=CATS.map(c=>[c,spent(c[0])]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+ if(!cs.length)return '<div class="card"><div class="em0">هنوز مصرفی ثبت نشده</div></div>';
+ let a=0;const g=cs.map((x,k)=>{const f=a;a+=x[1]/e*100;return `${colr(k)} ${f}% ${a}%`}).join(',');
+ const k0=ymNow(),m=[3,2,1,0].map(o=>{const k=k0-o;return[MN[k%12],tx.filter(x=>x.t==='e'&&(x.ym===undefined?o===0:x.ym===k)).reduce((s,x)=>s+x.a,0)]}),mx=Math.max(1,...m.map(x=>x[1]));
+ return `<div class="card"><h2>مصرف به تفکیک بخش</h2><div class="dn"><i style="background:conic-gradient(${g})"></i><div class="lg">${cs.map((x,k)=>`<div><u style="background:${colr(k)}"></u>${esc(x[0][0])}<em>${fa(x[1]/e*100)}٪</em></div>`).join('')}</div></div></div>
+ <div class="card"><h2>مقایسه چهار ماه</h2><div class="cols">${m.map(x=>`<div><span>${fa(x[1]/1000)}هزار</span><i style="height:${x[1]/mx*100}%"></i>${x[0]}</div>`).join('')}</div></div>
+ <div class="tip"><span>بیشترین مصرف شما ${cs[0][0][0]} است (${fa(cs[0][1])} افغانی).</span> <span>${i>e?`این ماه ${fa(i-e)} افغانی باقی مانده؛ پیشنهاد می‌کنیم نصف آن را به هدف‌ها اضافه کنید.`:'مصرف از درآمد بیشتر شده؛ بودجه بخش‌ها را بازبینی کنید.'}</span></div>
+ <button class="btn" onclick="toast('گزارش PDF آماده شد')">اشتراک‌گذاری گزارش</button>`},
+newcat(){
+ const exp=S.ck==='e';
+ return `<div class="card"><div class="sp" style="margin-bottom:8px">${exp?'نام بخش مصرف':'نام بخش درآمد'}</div><input class="fld" id="cn" maxlength="20" placeholder="مثلاً لباس، موبایل، هدیه" value="${esc(S.cnm||'')}" style="margin-bottom:0"></div>
+ <h2>آیکن</h2><div class="chips">${ICONS.map(n=>`<button class="${S.ci===n?'on':''}" aria-pressed="${S.ci===n}" aria-label="آیکن" onclick="pi('${n}')">${ic(n,20)}</button>`).join('')}</div>
+ ${exp?`<h2>بودجه ماهانه (اختیاری)</h2><input class="fld" id="cb" inputmode="numeric" placeholder="مبلغ به افغانی؛ بعداً هم می‌توانید تعیین کنید" value="${esc(S.cbv||'')}">`:''}
+ <button class="btn ${exp?'':'g'}" onclick="svc()">ساخت بخش</button>`},
+more(){
+ const L=[['debts','swap','قرض‌ها','طلب و بدهی'],['report','chart','گزارش ماهانه','نمودار و مقایسه'],['settings','sliders','تنظیمات','حالت شب، رمز، پشتیبان']];
+ return `<div class="card">${L.map(x=>`<div class="row" onclick="go('${x[0]}')" style="cursor:pointer">${tile(x[1],'#1F3C88')}<div class="m"><b>${x[2]}</b><span>${x[3]}</span></div><span class="flip" style="color:var(--mute);display:grid">${ic('left',18)}</span></div>`).join('')}</div>`},
+settings(){
+ const T=(k,t,s)=>`<div class="row"><div class="m"><b>${t}</b><span>${s}</span></div><button class="tg ${S[k]?'on':''}" role="switch" aria-checked="${!!S[k]}" aria-label="${t}" onclick="tgl('${k}')"></button></div>`;
+ return `<div class="card">${T('dark','حالت شب','برای استفاده شبانه')}${T('pin','قفل با رمز','حفظ حریم خصوصی')}${T('rem','یادآوری قبض‌ها','یک روز قبل از موعد')}</div>
+ <div class="card"><div class="row"><div class="m"><b>واحد پول</b></div><span class="pill on">افغانی (AFN)</span></div><div class="row"><div class="m"><b>زبان</b></div><div style="display:flex;gap:6px">${[['fa','دری'],['ps','پښتو'],['en','English']].map(l=>`<button class="pill ${S.lang===l[0]?'on':''}" onclick="sl('${l[0]}')">${l[1]}</button>`).join('')}</div></div></div>
+ <button class="btn" onclick="bk()">پشتیبان‌گیری از اطلاعات</button>
+ <button class="btn g" style="margin-top:10px" onclick="$('rf').click()">بازگردانی از فایل پشتیبان</button>
+ <input type="file" id="rf" accept="application/json,.json" hidden onchange="rs(this)">
+ <p style="font-size:12px;color:var(--mute);text-align:center;margin-top:10px;line-height:1.8">فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.</p>`}
+};
+const T={home:['بودجه‌یار','عقرب ۱۴۰۵'],tx:['همه ثبت‌ها'],add:['ثبت جدید'],budget:['بودجه ماهانه'],goals:['هدف‌های پس‌انداز'],more:['بیشتر'],debts:['قرض‌ها'],report:['گزارش ماه'],settings:['تنظیمات'],newcat:['بخش جدید']};
+const MAIN=['home','budget','goals','more'];
+function draw(){
+ const t=S.scr==='home'?[T.home[0],(o=>MN[o.m-1]+' '+pd(o.y))(sol(new Date()))]:T[S.scr];
+ $('hd').innerHTML=(MAIN.includes(S.scr)?'':`<button class="ib flip" aria-label="بازگشت" onclick="back()">${ic('chev',20)}</button>`)+`<h1>${t[0]}${t[1]?`<small>${t[1]}</small>`:''}</h1>`+(S.scr==='home'?`<button class="ib" aria-label="اعلان‌ها" onclick="toast('۲ قبض نزدیک است')">${ic('bell',20)}</button>`:'');
+ const m=$('mn');m.style.animation='none';m.offsetWidth;m.style.animation='';m.innerHTML=V[S.scr]();m.scrollTop=0;
+ const n=(k,i,l)=>`<button class="${S.scr===k?'on':''}" onclick="go('${k}')"><span>${ic(i,23)}</span>${l}</button>`;
+ $('nv').innerHTML=n('home','home','خانه')+n('budget','pie','بودجه')+`<button class="fab" aria-label="ثبت جدید" onclick="add(S.kind)">${ic('plus',26)}</button>`+n('goals','target','هدف‌ها')+n('more','grid','بیشتر');[$('hd'),m,$('nv')].forEach(loc);persist()}
+function go(s){S.prev=S.scr;S.scr=s;draw()}
+function back(){S.scr=S.scr==='newcat'?(S.from||'home'):(({tx:'home',add:'home',debts:'more',report:'more',settings:'more'})[S.scr]||'home');draw()}
+function add(k){if(S.scr!=='add'||S.kind!==k){S.cat=(k==='e'?CATS:INC)[0][0];S.da='';S.dn=''}S.kind=k;S.scr='add';draw()}
+function keep(){const a=$('amt').value,n=$('nt').value;draw();$('amt').value=a;$('nt').value=n}
+function q(v){const a=$('amt');a.value=(parseInt(a.value.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),10)||0)+v}
+function save(){
+ const a=parseInt($('amt').value.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),10);
+ if(!a||a<=0){toast('مبلغ را وارد کنید');$('amt').focus();return}
+ tx.push({id:++id,t:S.kind,a,c:S.cat,n:$('nt').value.trim(),d:fmtD(sol(new Date())),ym:ymNow()});
+ const over=S.kind==='e'&&lim[S.cat]&&spent(S.cat)>lim[S.cat];S.rec=false;S.da='';S.dn='';S.scr='home';draw();
+ toast(over?`ذخیره شد. بودجه ${S.cat} تمام شده است`:'ذخیره شد')}
+function del(i){tx=tx.filter(x=>x.id!==i);toast('حذف شد');draw()}
+function pay(k){const b=bills.splice(k,1)[0];tx.push({id:++id,t:'e',a:b.a,c:b.c,n:b.n,d:fmtD(sol(new Date())),ym:ymNow()});toast('قبض پرداخت شد');draw()}
+const used=c=>tx.some(x=>x.t==='e'&&x.c===c)||bills.some(b=>b.c===c);
+function lm(k){const c=CATS[k][0],v=pn($('lm'+k).value);if(v)lim[c]=v;else delete lim[c];toast(v?'بودجه تعیین شد':'بودجه برداشته شد');draw()}
+function dc(k){const c=CATS[k][0];if(used(c)){toast('این بخش استفاده شده و حذف نمی‌شود');return}CATS.splice(k,1);delete lim[c];toast('بخش حذف شد');draw()}
+function pc(k){S.cat=(S.kind==='e'?CATS:INC)[k][0];keep()}
+function nc(from){if(from==='add'){S.da=$('amt').value;S.dn=$('nt').value}S.from=from;S.ck=from==='budget'?'e':S.kind;S.ci='star';S.cnm='';S.cbv='';S.scr='newcat';draw()}
+function pi(n){S.cnm=$('cn').value;if($('cb'))S.cbv=$('cb').value;S.ci=n;draw()}
+function svc(){const n=$('cn').value.trim();if(!n){toast('نام بخش را بنویسید');$('cn').focus();return}
+ const L=S.ck==='e'?CATS:INC;if(L.some(c=>c[0]===n)){toast('این بخش از قبل هست');return}
+ L.push([n,S.ci]);if(S.ck==='e'&&$('cb')){const b=pn($('cb').value);if(b)lim[n]=b}
+ if(S.from==='add')S.cat=n;S.scr=S.from==='add'?'add':'budget';S.cnm='';S.cbv='';draw();toast('بخش «'+n+'» ساخته شد')}
+function dep(k){const g=goals[k],v=pn($('dp'+k).value);if(!v){toast('مبلغ را وارد کنید');return}g.s=Math.min(g.tg,g.s+v);toast(g.s>=g.tg?'تبریک! به هدف رسیدید':'به پس‌انداز اضافه شد');draw()}
+function ng(){const n=$('gn').value.trim(),t=parseInt($('gt').value.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)),10);
+ if(!n||!t){toast('نام و مبلغ هدف را وارد کنید');return}goals.push({n,tg:t,s:0,e:'star'});S.gf=false;toast('هدف ساخته شد');draw()}
+function settle(i){debts=debts.filter(d=>d.id!==i);toast('تسویه شد');draw()}
+function ge(k){S.ge=k;S.gd=-1;draw()}
+function gd(k){S.gd=k;S.ge=-1;draw()}
+function gx(k){goals.splice(k,1);S.gd=-1;toast('هدف حذف شد');draw()}
+function gs(k){const n=$('en'+k).value.trim(),t=pn($('et'+k).value),s=pn($('es'+k).value);if(!n||!t){toast('نام و مبلغ هدف را وارد کنید');return}goals[k]={...goals[k],n,tg:t,s:Math.min(s,t)};S.ge=-1;toast('هدف ویرایش شد');draw()}
+const MN=['حمل','ثور','جوزا','سرطان','اسد','سنبله','میزان','عقرب','قوس','جدی','دلو','حوت'];
+const pd=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const sol=dt=>{try{const p=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(dt),g=t=>+p.find(x=>x.type===t).value.replace(/\D/g,'');return{y:g('year'),m:g('month'),d:g('day')}}catch(e){return{y:1405,m:9,d:1}}};
+const fmtD=o=>o?`${pd(o.d)} ${MN[o.m-1]} ${pd(o.y)}`:'';
+function dsl(){S.ddt={d:+$('sd').value,m:+$('sm').value,y:+$('sy').value}}
+function dpk(k){if($('sd'))dsl();S.dw=$('dw').value;S.dm=$('da2').value;S.dq=$('dnt').value;S.dsel=k;if(k==='t')S.ddt=sol(new Date());else if(k==='y')S.ddt=sol(new Date(Date.now()-864e5));draw()}
+function dk(){if($('sd'))dsl();S.dw=$('dw').value;S.dm=$('da2').value;S.dq=$('dnt').value;draw()}
+function sd(){const w=$('dw').value.trim(),a=pn($('da2').value);if(!w||!a){toast('نام و مبلغ را وارد کنید');return}if($('sd'))dsl();const o={...S.ddt};o.d=Math.min(o.d,o.m<=6?31:30);debts.push({id:++id,who:w,a,dir:S.dd==='lent'?'lent':'owe',dt:o,note:$('dnt').value.trim()});S.df=false;toast('قرض ثبت شد');draw()}
+function tgl(k){if(k==='pin'){if(S.pin)lk('off');else if(cOK())lk('set');else toast('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}if(k==='dark'){S.dark=!S.dark;document.documentElement.dataset.theme=S.dark?'dark':'light'}else S[k]=!S[k];draw()}
+const ymNow=()=>{const o=sol(new Date());return o.y*12+o.m-1};
+const cm=x=>x.ym===undefined||x.ym===ymNow();
+const MINPIN=6,PBK=310000,enc=new TextEncoder(),dec=new TextDecoder();
+let LOCKED=false;try{LOCKED=!!localStorage.getItem('bY1e')}catch(e){}
+let KEY=null,SALT=null,Q=Promise.resolve();
+const u2b=u=>{let t='';for(let i=0;i<u.length;i+=8192)t+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(t)};
+const b2u=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
+const npin=p=>p.trim().replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const cOK=()=>!!(window.crypto&&crypto.subtle);
+const dkey=async(p,sl)=>{const m=await crypto.subtle.importKey('raw',enc.encode(p),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt:sl,iterations:PBK,hash:'SHA-256'},m,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])};
+const seal=async js=>{const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},KEY,enc.encode(js));return JSON.stringify({v:1,s:u2b(SALT),i:u2b(iv),d:u2b(new Uint8Array(ct))})};
+async function opn(p){const o=JSON.parse(localStorage.getItem('bY1e')),sl=b2u(o.s),k=await dkey(p,sl),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b2u(o.i)},k,b2u(o.d));return{j:JSON.parse(dec.decode(pt)),k,s:sl}}
+const snap=()=>({CATS,INC,lim,tx,bills,goals,debts,id,lang:S.lang,dark:S.dark,rem:S.rem});
+function persist(){const js=JSON.stringify(snap());try{localStorage.setItem('bY1l',S.lang);localStorage.setItem('bY1d',S.dark?'1':'')}catch(e){}if(KEY)Q=Q.then(async()=>{try{localStorage.setItem('bY1e',await seal(js))}catch(e){}});else if(!LOCKED)try{localStorage.setItem('bY1',js)}catch(e){}}
+function lkWait(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');if(!f.n||f.n<4)return 0;return Math.max(0,Math.min(300,5*2**(f.n-4))*1000-(Date.now()-f.t))}catch(e){return 0}}
+function lkFail(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');localStorage.setItem('bY1f',JSON.stringify({n:(f.n||0)+1,t:Date.now()}))}catch(e){}}
+function lkPrep(){try{const l=localStorage.getItem('bY1l');if(['fa','ps','en'].includes(l))S.lang=l;if(localStorage.getItem('bY1d')){S.dark=true;document.documentElement.dataset.theme='dark'}}catch(e){}const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl'}
+function lk(mode){let o=$('lk');if(!o){o=document.createElement('div');o.id='lk';o.className='lk';document.querySelector('.ph').appendChild(o)}
+const t=tx2,F=(i,ph)=>`<input class="fld" id="${i}" type="password" inputmode="numeric" autocomplete="off" placeholder="${t(ph)}" style="text-align:center" onkeydown="if(event.key==='Enter')lkgo('${mode}')">`;
+const ttl=mode==='set'?'تنظیم رمز':mode==='off'?'رمز فعلی را وارد کنید':'رمز خود را وارد کنید',go=mode==='set'?'فعال کردن قفل':mode==='off'?'غیرفعال کردن قفل':'باز کردن';
+o.innerHTML=`<div class="lkb"><img src="icon-192.png" width="72" height="72" alt="" style="border-radius:18px;margin:0 auto 4px"><h2>${t(ttl)}</h2>${mode==='set'?`<p class="lkn">${t('هشدار: اگر رمز را فراموش کنید، اطلاعات قابل بازیابی نیست. حتماً از اطلاعات پشتیبان بگیرید.')}</p>${F('lp1','رمز (حداقل ۶ رقم)')}${F('lp2','تکرار رمز')}`:F('lp1','رمز')}<div class="lkm" id="lkm" role="alert"></div><button class="btn" id="lkg" onclick="lkgo('${mode}')">${t(go)}</button>${mode==='set'||mode==='off'?`<button class="lks" onclick="lkx()">${t('لغو')}</button>`:`<button class="lks" onclick="lkf()">${t('رمز را فراموش کرده‌ام')}</button>`}</div>`;
+setTimeout(()=>{const e=$('lp1');if(e)e.focus()},60)}
+function lkx(){const o=$('lk');if(o)o.remove();draw()}
+function lkf(){if(confirm(tx2('اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟'))&&confirm(tx2('مطمئن هستید؟ این کار قابل بازگشت نیست.'))){try{['bY1e','bY1','bY1f'].forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()}}
+async function lkgo(mode){const m=$('lkm'),b=$('lkg'),say=x=>{m.textContent=tx2(x)},p1=npin($('lp1').value);say('');
+if(!cOK()){say('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}
+if(mode==='set'){
+if(p1.length<MINPIN){say('رمز باید حداقل ۶ رقم باشد');return}
+if(p1!==npin($('lp2').value)){say('دو رمز یکسان نیست');return}
+b.disabled=true;
+try{const sl=crypto.getRandomValues(new Uint8Array(16)),k=await dkey(p1,sl);SALT=sl;KEY=k;await Q;localStorage.setItem('bY1e',await seal(JSON.stringify(snap())));localStorage.removeItem('bY1');LOCKED=true;S.pin=true}catch(e){KEY=null;SALT=null;b.disabled=false;say('این مرورگر از رمزگذاری پشتیبانی نمی‌کند');return}
+lkx();toast('قفل فعال شد');return}
+if(!p1)return;
+const chkW=mode==='unlock'||mode==='relock';
+if(chkW&&lkWait()>0){say('چند لحظه صبر کنید و دوباره امتحان کنید');return}
+b.disabled=true;let r;try{r=await opn(p1)}catch(e){}
+b.disabled=false;
+if(!r){if(chkW)lkFail();say('رمز اشتباه است');const e=$('lp1');e.value='';e.focus();return}
+try{localStorage.removeItem('bY1f')}catch(e){}
+if(mode==='unlock'){applyState(r.j);KEY=r.k;SALT=r.s;S.pin=true;lkx();return}
+if(mode==='relock'){const o=$('lk');if(o)o.remove();return}
+if(mode==='off'){await Q;try{localStorage.setItem('bY1',JSON.stringify(snap()));localStorage.removeItem('bY1e')}catch(e){say('رمز اشتباه است');return}KEY=null;SALT=null;LOCKED=false;S.pin=false;lkx();toast('قفل غیرفعال شد')}}
+let HT=0;document.addEventListener('visibilitychange',()=>{if(document.hidden){HT=Date.now();return}if(KEY&&HT&&Date.now()-HT>60000&&!$('lk'))lk('relock')});
+function applyState(j){CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}
+function bk(){const b=new Blob([JSON.stringify(snap())],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
+function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
+function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;delete j.pin;const js=JSON.stringify(j);Q.then(async()=>{try{if(KEY)localStorage.setItem('bY1e',await seal(js));else localStorage.setItem('bY1',js)}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)})};r.onerror=bad;r.readAsText(f)}
+(function(){if(LOCKED)return;try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(j)applyState(j)}catch(e){}})();
+if(LOCKED){lkPrep();lk('unlock')}else draw();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
