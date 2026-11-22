@@ -312,6 +312,8 @@ const DS=`غذا|خواړه|Food
 اطلاعات رمزگذاری‌شده بدون رمز قابل بازیابی نیست. اگر فایل پشتیبان دارید، بعد از پاک کردن می‌توانید آن را برگردانید. همهٔ اطلاعات پاک شود؟|کوډ شوي معلومات پرته له پټنوم نه بیرته نه ترلاسه کېږي. که بیک‌اپ فایل لرئ، وروسته له پاکولو یې بیرته راوړلای شئ. ټول معلومات پاک شي؟|Encrypted data cannot be recovered without the PIN. If you have a backup file you can restore it after erasing. Erase all data?
 مطمئن هستید؟ این کار قابل بازگشت نیست.|ډاډه یاست؟ دا کار بیرته نه کېږي.|Are you sure? This cannot be undone.
 فایل پشتیبان رمزگذاری نمی‌شود؛ آن را در جای امن نگه دارید.|د بیک‌اپ فایل کوډ نه کېږي؛ په خوندي ځای کې یې وساتئ.|The backup file is not encrypted; keep it somewhere safe.
+ذخیره نشد؛ فضای مرورگر پر است یا حالت خصوصی فعال است. از اطلاعات پشتیبان بگیرید.|خوندي نه شو؛ د براوزر ځای ډک دی یا خصوصي حالت فعال دی. بیک‌اپ واخلئ.|Could not save: browser storage is full or private mode is on. Make a backup.
+نسخه جدید آماده شد؛ برنامه را ببندید و دوباره باز کنید|نوی نسخه چمتو شوه؛ اپ وتړئ او بیا یې پرانیزئ|A new version is ready; close and reopen the app
 امروز موعد است|نن د ورکړې ورځ ده|Due today
 فردا موعد است|سبا د ورکړې ورځ ده|Due tomorrow
 روز موعد در ماه|په میاشت کې د ورکړې ورځ|Due day of the month
@@ -505,7 +507,9 @@ const dkey=async(p,sl)=>{const m=await crypto.subtle.importKey('raw',enc.encode(
 const seal=async js=>{const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},KEY,enc.encode(js));return JSON.stringify({v:1,s:u2b(SALT),i:u2b(iv),d:u2b(new Uint8Array(ct))})};
 async function opn(p){const o=JSON.parse(localStorage.getItem('bY1e')),sl=b2u(o.s),k=await dkey(p,sl),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b2u(o.i)},k,b2u(o.d));return{j:JSON.parse(dec.decode(pt)),k,s:sl}}
 const snap=()=>({CATS,INC,lim,tx,bills,goals,debts,id,lang:S.lang,dark:S.dark,rem:S.rem});
-function persist(){const js=JSON.stringify(snap());try{localStorage.setItem('bY1l',S.lang);localStorage.setItem('bY1d',S.dark?'1':'')}catch(e){}if(KEY)Q=Q.then(async()=>{try{localStorage.setItem('bY1e',await seal(js))}catch(e){}});else if(!LOCKED)try{localStorage.setItem('bY1',js)}catch(e){}}
+const SFMSG='ذخیره نشد؛ فضای مرورگر پر است یا حالت خصوصی فعال است. از اطلاعات پشتیبان بگیرید.';let WT=0;
+function wsv(){if(Date.now()-WT<60000)return;WT=Date.now();toast(SFMSG)}
+function persist(){const js=JSON.stringify(snap());try{localStorage.setItem('bY1l',S.lang);localStorage.setItem('bY1d',S.dark?'1':'')}catch(e){}if(KEY)Q=Q.then(async()=>{try{localStorage.setItem('bY1e',await seal(js))}catch(e){wsv()}});else if(!LOCKED)try{localStorage.setItem('bY1',js)}catch(e){wsv()}}
 function lkWait(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');if(!f.n||f.n<4)return 0;return Math.max(0,Math.min(300,5*2**(f.n-4))*1000-(Date.now()-f.t))}catch(e){return 0}}
 function lkFail(){try{const f=JSON.parse(localStorage.getItem('bY1f')||'{}');localStorage.setItem('bY1f',JSON.stringify({n:(f.n||0)+1,t:Date.now()}))}catch(e){}}
 function lkPrep(){try{const l=localStorage.getItem('bY1l');if(['fa','ps','en'].includes(l))S.lang=l;if(localStorage.getItem('bY1d')){S.dark=true;document.documentElement.dataset.theme='dark'}}catch(e){}const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl'}
@@ -533,15 +537,19 @@ if(!r){if(chkW)lkFail();say('رمز اشتباه است');const e=$('lp1');e.val
 try{localStorage.removeItem('bY1f')}catch(e){}
 if(mode==='unlock'){applyState(r.j);KEY=r.k;SALT=r.s;S.pin=true;lkx();return}
 if(mode==='relock'){const o=$('lk');if(o)o.remove();return}
-if(mode==='off'){await Q;try{localStorage.setItem('bY1',JSON.stringify(snap()));localStorage.removeItem('bY1e')}catch(e){say('رمز اشتباه است');return}KEY=null;SALT=null;LOCKED=false;S.pin=false;lkx();toast('قفل غیرفعال شد')}}
+if(mode==='off'){await Q;try{localStorage.setItem('bY1',JSON.stringify(snap()));localStorage.removeItem('bY1e')}catch(e){say(SFMSG);return}KEY=null;SALT=null;LOCKED=false;S.pin=false;lkx();toast('قفل غیرفعال شد')}}
 let HT=0;document.addEventListener('visibilitychange',()=>{if(document.hidden){HT=Date.now();return}if(KEY&&HT&&Date.now()-HT>60000&&!$('lk'))lk('relock')});
 function applyState(j){CATS.splice(0,CATS.length,...j.CATS);INC.splice(0,INC.length,...j.INC);lim=j.lim||{};tx=j.tx||[];bills=j.bills||[];goals=j.goals||[];debts=j.debts||[];id=j.id||10;S.rem=j.rem;S.lang=j.lang||'fa';const h=document.documentElement;h.lang={fa:'fa-AF',ps:'ps-AF',en:'en'}[S.lang];h.dir=S.lang==='en'?'ltr':'rtl';if(j.dark){S.dark=true;h.dataset.theme='dark'}}
 function bk(){const b=new Blob([JSON.stringify(snap())],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='budgetyar-backup.json';a.click();toast('نسخه پشتیبان ذخیره شد')}
 function okb(j){const A=Array.isArray,O=x=>x&&typeof x==='object'&&!A(x),P=x=>A(x)&&x.every(c=>A(c)&&typeof c[0]==='string'&&typeof c[1]==='string');return O(j)&&P(j.CATS)&&j.CATS.length>0&&P(j.INC)&&j.INC.length>0&&A(j.tx)&&j.tx.every(x=>O(x)&&typeof x.a==='number')&&['bills','goals','debts'].every(k=>A(j[k])&&j[k].every(O))&&j.bills.every(b=>typeof b.a==='number'&&typeof b.n==='string'&&b.dd>=1&&b.dd<=31)&&(j.lim===undefined||O(j.lim))&&['fa','ps','en'].includes(j.lang||'fa')}
-function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;delete j.pin;const js=JSON.stringify(j);Q.then(async()=>{try{if(KEY)localStorage.setItem('bY1e',await seal(js));else localStorage.setItem('bY1',js)}catch(e){bad();return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)})};r.onerror=bad;r.readAsText(f)}
+function rs(el){const f=el.files&&el.files[0];el.value='';if(!f)return;const bad=()=>toast('فایل پشتیبان معتبر نیست');if(f.size>5e6){bad();return}const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){}if(!okb(j)){bad();return}if(!confirm(tx2('با بازگردانی، اطلاعات فعلی جایگزین می‌شود. ادامه می‌دهید؟')))return;delete j.pin;const js=JSON.stringify(j);Q.then(async()=>{try{if(KEY)localStorage.setItem('bY1e',await seal(js));else localStorage.setItem('bY1',js)}catch(e){toast(SFMSG);return}toast('اطلاعات بازگردانی شد');setTimeout(()=>location.reload(),900)})};r.onerror=bad;r.readAsText(f)}
 (function(){if(LOCKED)return;try{const j=JSON.parse(localStorage.getItem('bY1')||'null');if(j)applyState(j)}catch(e){}})();
 if(LOCKED){lkPrep();lk('unlock')}else draw();
-if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;
+navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)toast('نسخه جدید آماده شد؛ برنامه را ببندید و دوباره باز کنید')});
+addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(()=>{}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)navigator.serviceWorker.getRegistration().then(r=>r&&r.update().catch(()=>{})).catch(()=>{})})}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 </script>
 </body>
 </html>
